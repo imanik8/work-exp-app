@@ -22,7 +22,7 @@ Follow these steps to run the app locally:
 
 ```bash
 # Clone the repository
-git clone https://github.com/imanik8/work-exp-app.git
+git clone https://github.com/gitforaniket/work-exp-app.git
 
 # Navigate into the project folder
 cd work-experience-tracker
