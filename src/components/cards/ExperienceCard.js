@@ -11,8 +11,17 @@ const ExperienceCard = ({ experience, onRemove, index }) => {
       <div className="flex justify-between items-start mb-6">
         <div className="flex-1">
           <div className="flex items-center space-x-3 mb-2">
-            <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-2 rounded-lg">
-              <Building2 className="w-5 h-5 text-white" />
+            <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-2 rounded-lg flex items-center justify-center w-10 h-10">
+              {experience.companyLogo ? (
+                <img
+                  src={experience.companyLogo}
+                  alt={experience.company}
+                  className="w-8 h-8 object-contain bg-white rounded"
+                  onError={e => { e.target.style.display = 'none'; }}
+                />
+              ) : (
+                <Building2 className="w-5 h-5 text-white" />
+              )}
             </div>
             <div>
               <h3 className="text-xl font-bold text-gray-800">{experience.position}</h3>

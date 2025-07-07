@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, Building2, MapPin, Calendar, Award, Trash2 } from 'lucide-react';
 import Input from '../common/Input';
 import Button from '../common/Button';
@@ -6,6 +6,8 @@ import Button from '../common/Button';
 const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
   const [formData, setFormData] = useState({
     company: '',
+    companyDomain: '',
+    companyLogo: '',
     position: '',
     location: '',
     startDate: '',
@@ -14,6 +16,40 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
     description: '',
     achievements: ['']
   });
+  const [companyQuery, setCompanyQuery] = useState('');
+  const [companySuggestions, setCompanySuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  useEffect(() => {
+    if (companyQuery.length < 2) {
+      setCompanySuggestions([]);
+      return;
+    }
+    const controller = new AbortController();
+    fetch(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${encodeURIComponent(companyQuery)}`, { signal: controller.signal })
+      .then(res => res.json())
+      .then(data => setCompanySuggestions(data))
+      .catch(() => setCompanySuggestions([]));
+    return () => controller.abort();
+  }, [companyQuery]);
+
+  const handleCompanyInput = (e) => {
+    const value = e.target.value;
+    setCompanyQuery(value);
+    setFormData(prev => ({ ...prev, company: value, companyDomain: '', companyLogo: '' }));
+    setShowSuggestions(true);
+  };
+
+  const handleCompanySelect = (company) => {
+    setFormData(prev => ({
+      ...prev,
+      company: company.name,
+      companyDomain: company.domain,
+      companyLogo: company.logo
+    }));
+    setCompanyQuery(company.name);
+    setShowSuggestions(false);
+  };
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -44,10 +80,24 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
   };
 
   const handleSubmit = () => {
-    if (formData.company && formData.position && formData.startDate) {
-      onSubmit(formData);
+    let updatedFormData = { ...formData };
+    if (!formData.companyLogo && companySuggestions.length > 0) {
+      // Try to match the company name to a suggestion
+      const match = companySuggestions.find(
+        c => c.name.toLowerCase() === formData.company.toLowerCase()
+      ) || companySuggestions[0];
+      if (match) {
+        updatedFormData.companyLogo = match.logo;
+        updatedFormData.companyDomain = match.domain;
+        updatedFormData.company = match.name;
+      }
+    }
+    if (updatedFormData.company && updatedFormData.position && updatedFormData.startDate) {
+      onSubmit(updatedFormData);
       setFormData({
         company: '',
+        companyDomain: '',
+        companyLogo: '',
         position: '',
         location: '',
         startDate: '',
@@ -56,6 +106,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
         description: '',
         achievements: ['']
       });
+      setCompanyQuery('');
     }
   };
 
@@ -68,15 +119,35 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
       
       <div className="space-y-6">
         <div className="grid md:grid-cols-2 gap-6">
-          <Input
-            label="Company Name"
-            name="company"
-            value={formData.company}
-            onChange={handleInputChange}
-            placeholder="e.g., Google, Microsoft"
-            icon={Building2}
-            required
-          />
+          <div className="relative">
+            <Input
+              label="Company Name"
+              name="company"
+              value={companyQuery}
+              onChange={handleCompanyInput}
+              placeholder="e.g., Google, Microsoft"
+              icon={Building2}
+              iconImg={formData.companyLogo || null}
+              autoComplete="off"
+              required
+              onFocus={() => setShowSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+            />
+            {showSuggestions && companySuggestions.length > 0 && (
+              <ul className="absolute z-10 bg-white border border-gray-200 w-full mt-1 rounded shadow-lg max-h-48 overflow-y-auto top-full left-0">
+                {companySuggestions.map((c) => (
+                  <li
+                    key={c.domain}
+                    className="flex items-center px-4 py-2 cursor-pointer hover:bg-indigo-50"
+                    onMouseDown={() => handleCompanySelect(c)}
+                  >
+                    <img src={c.logo} alt={c.name} className="w-6 h-6 mr-2 bg-white rounded" onError={e => { e.target.style.display = 'none'; }} />
+                    <span>{c.name}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
           <Input
             label="Position"
             name="position"
