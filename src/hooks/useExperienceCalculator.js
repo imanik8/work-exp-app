@@ -25,14 +25,14 @@ export default function useExperienceCalculator(experiences) {
       
       if (!currentEndDate || startDate > currentEndDate) {
         // Non-overlapping period
-        const { months } = calculateDuration(
+        const { years, months } = calculateDuration(
           exp.startYear,
           exp.startMonth,
           exp.endYear,
           exp.endMonth,
           exp.isCurrent
         );
-        totalMonths += months;
+        totalMonths += years * 12 + months;
       } else if (endDate > currentEndDate) {
         // Partially overlapping period
         const overlapMonths = differenceInMonths(endDate, currentEndDate);
