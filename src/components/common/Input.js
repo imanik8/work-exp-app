@@ -23,14 +23,18 @@ const Input = ({
       )}
       <div className="relative">
         {iconImg ? (
-          <img
-            src={iconImg}
-            alt="logo"
-            className="absolute left-3 top-3 w-5 h-5 object-contain bg-white rounded"
-            style={{ pointerEvents: "none" }}
-          />
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+            <img
+              src={iconImg}
+              alt="logo"
+              className="w-5 h-5 object-contain bg-white rounded"
+              style={{ pointerEvents: "none" }}
+            />
+          </span>
         ) : Icon && (
-          <Icon className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+            <Icon className="w-5 h-5 text-gray-400" />
+          </span>
         )}
         <input
           type={type}
