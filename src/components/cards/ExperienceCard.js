@@ -11,18 +11,20 @@ const ExperienceCard = ({ experience, onRemove, index }) => {
       <div className="flex justify-between items-start mb-6">
         <div className="flex-1">
           <div className="flex items-center space-x-3 mb-2">
-            <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-2 rounded-lg flex items-center justify-center w-10 h-10">
-              {experience.companyLogo ? (
-                <img
-                  src={experience.companyLogo}
-                  alt={experience.company}
-                  className="w-8 h-8 object-contain bg-white rounded"
-                  onError={e => { e.target.style.display = 'none'; }}
-                />
-              ) : (
-                <Building2 className="w-5 h-5 text-white" />
-              )}
-            </div>
+            {/* Remove background and border, align icon/logo with text */}
+            {experience.companyLogo ? (
+              <img
+                src={experience.companyLogo}
+                alt={experience.company}
+                className="w-8 h-8 object-contain rounded-md"
+                style={{ minWidth: '2rem' }}
+                onError={e => { e.target.style.display = 'none'; }}
+              />
+            ) : (
+              <span className="w-8 h-8 flex items-center justify-center rounded-md bg-gray-100" style={{ minWidth: '2rem' }}>
+                <Building2 className="w-5 h-5 text-gray-400" />
+              </span>
+            )}
             <div>
               <h3 className="text-xl font-bold text-gray-800">{experience.position}</h3>
               <p className="text-lg text-indigo-600 font-semibold">{experience.company}</p>
