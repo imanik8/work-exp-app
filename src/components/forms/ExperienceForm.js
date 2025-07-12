@@ -2,34 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Building2, MapPin, Calendar, Award, Trash2 } from 'lucide-react';
 import Input from '../common/Input';
 import Button from '../common/Button';
+import jobTitlesConfig from '../../config/jobTitles.json';
 
-// Common job titles for fast autocomplete
-const jobTitles = [
-  'Software Engineer', 'Senior Software Engineer', 'Lead Software Engineer',
-  'Software Developer', 'Full Stack Developer', 'Frontend Developer', 'Backend Developer',
-  'Mobile Developer', 'iOS Developer', 'Android Developer', 'React Developer',
-  'Vue.js Developer', 'Angular Developer', 'Node.js Developer', 'Python Developer',
-  'Java Developer', 'C# Developer', 'PHP Developer', 'Ruby Developer', 'Go Developer',
-  'DevOps Engineer', 'Cloud Engineer', 'Data Engineer', 'Machine Learning Engineer',
-  'AI Engineer', 'QA Engineer', 'Test Engineer', 'Security Engineer', 'Network Engineer',
-  'Data Scientist', 'Data Analyst', 'Business Analyst', 'Product Manager',
-  'Engineering Manager', 'Technical Lead', 'Team Lead', 'Scrum Master',
-  'Project Manager', 'Program Manager', 'CTO', 'VP of Engineering',
-  'UX Designer', 'UI Designer', 'Product Designer', 'Graphic Designer',
-  'Marketing Manager', 'Digital Marketing Manager', 'Sales Manager',
-  'Business Development Manager', 'Consultant', 'Operations Manager',
-  'Financial Analyst', 'HR Manager', 'Recruiter', 'Lawyer', 'Attorney',
-  'Nurse', 'Physician', 'Teacher', 'Professor', 'Research Scientist',
-  'Content Writer', 'Editor', 'Customer Service Representative',
-  'Administrative Assistant', 'Executive Assistant', 'Manager', 'Director',
-  'CEO', 'Founder', 'Entrepreneur', 'Freelancer', 'Contractor'
-];
+// Extract all job titles from the config
+const allJobTitles = jobTitlesConfig.jobTitles.flatMap(category => category.titles);
 
 // Function to filter job titles based on search query
 const filterJobTitles = (query) => {
   if (!query || query.length < 2) return [];
   const lowercaseQuery = query.toLowerCase();
-  return jobTitles
+  return allJobTitles
     .filter(title => title.toLowerCase().includes(lowercaseQuery))
     .slice(0, 10);
 };

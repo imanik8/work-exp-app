@@ -1,0 +1,343 @@
+{
+  "jobTitles": [
+    {
+      "category": "Software Development",
+      "titles": [
+        "Software Engineer",
+        "Senior Software Engineer",
+        "Lead Software Engineer",
+        "Principal Software Engineer",
+        "Software Developer",
+        "Senior Software Developer",
+        "Full Stack Developer",
+        "Frontend Developer",
+        "Backend Developer",
+        "Mobile Developer",
+        "iOS Developer",
+        "Android Developer",
+        "React Developer",
+        "Vue.js Developer",
+        "Angular Developer",
+        "Node.js Developer",
+        "Python Developer",
+        "Java Developer",
+        "C# Developer",
+        "PHP Developer",
+        "Ruby Developer",
+        "Go Developer",
+        "Rust Developer",
+        "DevOps Engineer",
+        "Site Reliability Engineer",
+        "Cloud Engineer",
+        "Data Engineer",
+        "Machine Learning Engineer",
+        "AI Engineer",
+        "QA Engineer",
+        "Test Engineer",
+        "Automation Engineer",
+        "Embedded Software Engineer",
+        "Game Developer",
+        "Unity Developer",
+        "Blockchain Developer",
+        "Security Engineer",
+        "Cybersecurity Engineer",
+        "Network Engineer",
+        "Systems Engineer",
+        "Database Administrator",
+        "Database Developer",
+        "Data Scientist",
+        "Data Analyst",
+        "Business Analyst",
+        "Product Manager",
+        "Technical Product Manager",
+        "Engineering Manager",
+        "Software Architect",
+        "Solutions Architect",
+        "Technical Lead",
+        "Team Lead",
+        "Scrum Master",
+        "Project Manager",
+        "Program Manager",
+        "Technical Program Manager",
+        "CTO",
+        "VP of Engineering",
+        "Director of Engineering",
+        "Head of Engineering"
+      ]
+    },
+    {
+      "category": "Design & UX",
+      "titles": [
+        "UX Designer",
+        "UI Designer",
+        "Product Designer",
+        "Visual Designer",
+        "Graphic Designer",
+        "Web Designer",
+        "Interaction Designer",
+        "User Experience Designer",
+        "User Interface Designer",
+        "Design Lead",
+        "Creative Director",
+        "Art Director",
+        "Brand Designer",
+        "Illustrator",
+        "Motion Designer",
+        "3D Designer"
+      ]
+    },
+    {
+      "category": "Marketing & Sales",
+      "titles": [
+        "Marketing Manager",
+        "Digital Marketing Manager",
+        "Content Marketing Manager",
+        "Social Media Manager",
+        "SEO Specialist",
+        "SEM Specialist",
+        "Marketing Specialist",
+        "Marketing Coordinator",
+        "Brand Manager",
+        "Product Marketing Manager",
+        "Growth Marketing Manager",
+        "Marketing Director",
+        "VP of Marketing",
+        "CMO",
+        "Sales Representative",
+        "Sales Manager",
+        "Account Executive",
+        "Business Development Representative",
+        "Sales Director",
+        "VP of Sales",
+        "Customer Success Manager",
+        "Account Manager",
+        "Partnership Manager"
+      ]
+    },
+    {
+      "category": "Business & Operations",
+      "titles": [
+        "Business Analyst",
+        "Operations Manager",
+        "Operations Analyst",
+        "Process Manager",
+        "Strategy Manager",
+        "Business Development Manager",
+        "Consultant",
+        "Management Consultant",
+        "Strategy Consultant",
+        "Business Consultant",
+        "Operations Director",
+        "Chief Operating Officer",
+        "Chief Executive Officer",
+        "Chief Financial Officer",
+        "Chief Marketing Officer",
+        "Chief Technology Officer",
+        "VP of Operations",
+        "Director of Operations"
+      ]
+    },
+    {
+      "category": "Finance & Accounting",
+      "titles": [
+        "Financial Analyst",
+        "Senior Financial Analyst",
+        "Finance Manager",
+        "Finance Director",
+        "CFO",
+        "Accountant",
+        "Senior Accountant",
+        "Accounting Manager",
+        "Controller",
+        "Treasurer",
+        "Investment Analyst",
+        "Portfolio Manager",
+        "Credit Analyst",
+        "Risk Analyst",
+        "Compliance Officer"
+      ]
+    },
+    {
+      "category": "Human Resources",
+      "titles": [
+        "HR Manager",
+        "HR Specialist",
+        "HR Coordinator",
+        "Recruiter",
+        "Talent Acquisition Specialist",
+        "HR Director",
+        "VP of Human Resources",
+        "Chief Human Resources Officer",
+        "Compensation Analyst",
+        "Benefits Specialist",
+        "Learning & Development Manager",
+        "Training Manager"
+      ]
+    },
+    {
+      "category": "Legal",
+      "titles": [
+        "Lawyer",
+        "Attorney",
+        "Legal Counsel",
+        "General Counsel",
+        "Paralegal",
+        "Legal Assistant",
+        "Compliance Manager",
+        "Legal Director"
+      ]
+    },
+    {
+      "category": "Healthcare",
+      "titles": [
+        "Nurse",
+        "Registered Nurse",
+        "Nurse Practitioner",
+        "Physician",
+        "Doctor",
+        "Medical Director",
+        "Healthcare Administrator",
+        "Clinical Manager",
+        "Pharmacist",
+        "Physical Therapist",
+        "Occupational Therapist",
+        "Medical Assistant"
+      ]
+    },
+    {
+      "category": "Education",
+      "titles": [
+        "Teacher",
+        "Professor",
+        "Instructor",
+        "Lecturer",
+        "Academic Director",
+        "Dean",
+        "Principal",
+        "School Administrator",
+        "Curriculum Developer",
+        "Educational Consultant"
+      ]
+    },
+    {
+      "category": "Research & Science",
+      "titles": [
+        "Research Scientist",
+        "Research Analyst",
+        "Research Manager",
+        "Research Director",
+        "Laboratory Manager",
+        "Clinical Research Associate",
+        "Biologist",
+        "Chemist",
+        "Physicist",
+        "Statistician",
+        "Epidemiologist"
+      ]
+    },
+    {
+      "category": "Creative & Media",
+      "titles": [
+        "Content Creator",
+        "Content Writer",
+        "Copywriter",
+        "Editor",
+        "Journalist",
+        "Reporter",
+        "Producer",
+        "Director",
+        "Photographer",
+        "Videographer",
+        "Video Editor",
+        "Sound Engineer",
+        "Musician",
+        "Actor",
+        "Artist"
+      ]
+    },
+    {
+      "category": "Customer Service & Support",
+      "titles": [
+        "Customer Service Representative",
+        "Customer Support Specialist",
+        "Technical Support Specialist",
+        "Help Desk Specialist",
+        "Support Manager",
+        "Customer Experience Manager",
+        "Client Success Manager"
+      ]
+    },
+    {
+      "category": "Supply Chain & Logistics",
+      "titles": [
+        "Supply Chain Manager",
+        "Logistics Manager",
+        "Procurement Manager",
+        "Purchasing Manager",
+        "Inventory Manager",
+        "Warehouse Manager",
+        "Transportation Manager"
+      ]
+    },
+    {
+      "category": "Real Estate",
+      "titles": [
+        "Real Estate Agent",
+        "Real Estate Broker",
+        "Property Manager",
+        "Real Estate Developer",
+        "Commercial Real Estate Manager"
+      ]
+    },
+    {
+      "category": "Non-Profit & Government",
+      "titles": [
+        "Program Coordinator",
+        "Program Manager",
+        "Grant Writer",
+        "Fundraising Manager",
+        "Development Director",
+        "Executive Director",
+        "Policy Analyst",
+        "Government Relations Manager"
+      ]
+    },
+    {
+      "category": "Other Professional Roles",
+      "titles": [
+        "Administrative Assistant",
+        "Executive Assistant",
+        "Office Manager",
+        "Receptionist",
+        "Coordinator",
+        "Specialist",
+        "Consultant",
+        "Advisor",
+        "Analyst",
+        "Manager",
+        "Director",
+        "VP",
+        "C-Level Executive",
+        "Entrepreneur",
+        "Founder",
+        "Co-Founder",
+        "CEO",
+        "President",
+        "Owner",
+        "Freelancer",
+        "Contractor",
+        "Intern",
+        "Student",
+        "Graduate",
+        "Entry Level",
+        "Junior",
+        "Senior",
+        "Lead",
+        "Principal",
+        "Staff",
+        "Associate",
+        "Assistant"
+      ]
+    }
+  ]
+} 
