@@ -3,6 +3,7 @@ import { Plus, Building2, MapPin, Calendar, Award, Trash2 } from 'lucide-react';
 import Input from '../common/Input';
 import Button from '../common/Button';
 import jobTitlesConfig from '../../config/jobTitles.json';
+import citiesConfig from '../../config/cities.json';
 
 // Extract all job titles from the config
 const allJobTitles = jobTitlesConfig.jobTitles.flatMap(category => category.titles);
@@ -13,6 +14,18 @@ const filterJobTitles = (query) => {
   const lowercaseQuery = query.toLowerCase();
   return allJobTitles
     .filter(title => title.toLowerCase().includes(lowercaseQuery))
+    .slice(0, 10);
+};
+
+// Extract all cities from the config
+const allCities = citiesConfig.cities;
+
+// Function to filter cities based on search query
+const filterCities = (query) => {
+  if (!query || query.length < 2) return [];
+  const lowercaseQuery = query.toLowerCase();
+  return allCities
+    .filter(city => city.toLowerCase().includes(lowercaseQuery))
     .slice(0, 10);
 };
 
@@ -35,6 +48,9 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
   const [positionQuery, setPositionQuery] = useState('');
   const [positionSuggestions, setPositionSuggestions] = useState([]);
   const [showPositionSuggestions, setShowPositionSuggestions] = useState(false);
+  const [locationQuery, setLocationQuery] = useState('');
+  const [locationSuggestions, setLocationSuggestions] = useState([]);
+  const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
 
   useEffect(() => {
     if (companyQuery.length < 2) {
@@ -88,6 +104,36 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
     }
   }, [positionQuery]);
 
+  useEffect(() => {
+    if (locationQuery.length < 2) {
+      setLocationSuggestions([]);
+      return;
+    }
+    // Local suggestions first
+    const localSuggestions = filterCities(locationQuery);
+    setLocationSuggestions(localSuggestions);
+    // Fallback to GeoDB Cities API if local suggestions are few
+    if (localSuggestions.length < 5 && locationQuery.length >= 3) {
+      const controller = new AbortController();
+      fetch(`https://geodb-free-service.wirefreethought.com/v1/geo/cities?limit=10&offset=0&namePrefix=${encodeURIComponent(locationQuery)}`, {
+        signal: controller.signal
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.data && Array.isArray(data.data)) {
+            const apiCities = [...new Set(data.data.map(city => `${city.city}, ${city.country}`))];
+            const all = [...new Set([...localSuggestions, ...apiCities])];
+            setLocationSuggestions(all.slice(0, 15));
+          }
+        })
+        .catch(() => {
+          // If API fails, keep local suggestions
+          console.log('GeoDB API search failed, using local suggestions only');
+        });
+      return () => controller.abort();
+    }
+  }, [locationQuery]);
+
   const handleCompanyInput = (e) => {
     const value = e.target.value;
     setCompanyQuery(value);
@@ -117,6 +163,18 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
     setFormData(prev => ({ ...prev, position: title }));
     setPositionQuery(title);
     setShowPositionSuggestions(false);
+  };
+
+  const handleLocationInput = (e) => {
+    const value = e.target.value;
+    setLocationQuery(value);
+    setFormData(prev => ({ ...prev, location: value }));
+    setShowLocationSuggestions(true);
+  };
+  const handleLocationSelect = (city) => {
+    setFormData(prev => ({ ...prev, location: city }));
+    setLocationQuery(city);
+    setShowLocationSuggestions(false);
   };
 
   const handleInputChange = (e) => {
@@ -244,14 +302,32 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
           </div>
         </div>
 
-        <Input
-          label="Location"
-          name="location"
-          value={formData.location}
-          onChange={handleInputChange}
-          placeholder="e.g., San Francisco, CA"
-          icon={MapPin}
-        />
+        <div className="relative">
+          <Input
+            label="Location"
+            name="location"
+            value={locationQuery}
+            onChange={handleLocationInput}
+            placeholder="e.g., San Francisco, CA"
+            icon={MapPin}
+            autoComplete="off"
+            onFocus={() => setShowLocationSuggestions(true)}
+            onBlur={() => setTimeout(() => setShowLocationSuggestions(false), 200)}
+          />
+          {showLocationSuggestions && locationSuggestions.length > 0 && (
+            <ul className="absolute z-10 bg-white border border-gray-200 w-full mt-1 rounded shadow-lg max-h-48 overflow-y-auto top-full left-0">
+              {locationSuggestions.map((city, index) => (
+                <li
+                  key={index}
+                  className="flex items-center px-4 py-2 cursor-pointer hover:bg-indigo-50"
+                  onMouseDown={() => handleLocationSelect(city)}
+                >
+                  <span>{city}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
         <div className="grid md:grid-cols-2 gap-6">
           <Input

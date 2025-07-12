@@ -14,6 +14,7 @@ A beautiful and intuitive React application for tracking and showcasing your pro
   - Real-time calculations: Automatically calculates total work experience
   - Company autocomplete: Integrated with Clearbit API for company logos and details
   - **Job titles autocomplete: Fast local search + JSearch API for comprehensive position suggestions**
+  - **Location autocomplete: Smart city suggestions with 300+ major cities worldwide**
   - Flexible date handling: Support for current positions and precise duration calculations
   - Achievement tracking: Add and manage key accomplishments for each role
 
@@ -38,7 +39,8 @@ A beautiful and intuitive React application for tracking and showcasing your pro
 - **Lucide React** – Beautiful and consistent icons
 - **Clearbit API** – Company data and logo integration
 - **JSearch API** – Job titles and position data for comprehensive autocomplete
-- **JSON Configuration** – External job titles data for maintainability
+- **GeoDB Cities API** – City data for location autocomplete (with local fallback)
+- **JSON Configuration** – External job titles and cities data for maintainability
 - **Modern JavaScript** – ES6+ features and best practices
 
 ## 📸 Preview
@@ -96,8 +98,9 @@ This creates an optimized production build in the `build` folder.
 - **Add Your First Experience**
   - Click "Add Your First Experience" or the "+" button
   - Fill in company details (autocomplete will suggest logos)
-  - **Add position with smart autocomplete** (60+ local titles + API suggestions)
-  - Add location and date information
+  - **Add position with smart autocomplete** (300+ local titles + API suggestions)
+  - **Add location with city autocomplete** (300+ major cities worldwide)
+  - Add date information
   - Include job description and key achievements
 
 - **Manage Your Timeline**
@@ -131,7 +134,8 @@ work-experience-tracker/
 │   │       ├── EmptyState.js        # Empty state component
 │   │       └── Header.js            # Application header
 │   ├── config/
-│   │   └── jobTitles.json           # Job titles configuration (300+ positions)
+│   │   ├── jobTitles.json           # Job titles configuration (300+ positions)
+│   │   └── cities.json              # Cities configuration (300+ major cities)
 │   ├── hooks/
 │   │   └── useExperience.js         # Custom hook for state management
 │   ├── utils/
@@ -164,6 +168,12 @@ The app uses two external APIs for enhanced functionality:
 - **Purpose:** Company logos and information
 - **Setup:** No API key required (free tier)
 - **Usage:** Automatic company logo fetching
+
+#### **GeoDB Cities API (Location Autocomplete)**
+- **Purpose:** Provides city data for location autocomplete
+- **Setup:** No API key required (free tier)
+- **Fallback:** App works perfectly without API using 300+ local cities
+- **Usage:** Hybrid approach - fast local search + smart API fallback
 
 ### **Styling Configuration**
 - **Tailwind CSS**
@@ -200,6 +210,7 @@ The app uses two external APIs for enhanced functionality:
 - **API usage:** 
   - Clearbit API: Company logo fetching
   - JSearch API: Job titles autocomplete (optional, falls back to local data)
+  - GeoDB Cities API: Location autocomplete (optional, falls back to local data)
 - **Hybrid approach:** Fast local search + smart API fallback for comprehensive results
 
 ## 🛠️ Development
@@ -218,7 +229,7 @@ The project has been cleaned up to remove unnecessary files:
 - Removed unused `reportWebVitals.js`
 - Removed `.DS_Store` files
 - Removed `.vite` directory (not needed for Create React App)
-- Organized job titles in external JSON configuration
+- Organized job titles and cities in external JSON configuration
 
 ### Contributing
 
@@ -236,6 +247,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - Clearbit for company data and logos
 - JSearch API for comprehensive job titles data
+- GeoDB Cities API for location autocomplete
 - Lucide for beautiful icons
 - Tailwind CSS for the styling framework
 - React team for the amazing framework
