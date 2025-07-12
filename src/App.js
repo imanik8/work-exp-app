@@ -12,7 +12,7 @@ const App = () => {
   const { experiences, showForm, addExperience, removeExperience, toggleForm } = useExperience();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-linkedin-50 via-white to-linkedin-100">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <Header />
         

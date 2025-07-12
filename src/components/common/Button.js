@@ -12,7 +12,7 @@ const Button = ({
   const baseClasses = "font-semibold rounded-lg transition-all duration-200 transform hover:scale-105";
   
   const variants = {
-    primary: "bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:from-indigo-600 hover:to-purple-700 shadow-lg",
+    primary: "bg-gradient-to-r from-linkedin-500 to-linkedin-600 text-white hover:from-linkedin-600 hover:to-linkedin-700 shadow-lg",
     secondary: "border border-gray-300 text-gray-700 hover:bg-gray-50",
     danger: "text-red-500 hover:bg-red-50"
   };

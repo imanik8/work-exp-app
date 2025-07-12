@@ -44,7 +44,7 @@ const Input = ({
           placeholder={placeholder}
           required={required}
           disabled={disabled}
-          className={`w-full ${(Icon || iconImg) ? 'pl-10' : 'pl-4'} pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 ${disabled ? 'bg-gray-100' : ''}`}
+          className={`w-full ${(Icon || iconImg) ? 'pl-10' : 'pl-4'} pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-linkedin-500 focus:border-transparent transition-all duration-200 ${disabled ? 'bg-gray-100' : ''}`}
           {...props}
         />
       </div>

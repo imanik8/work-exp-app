@@ -239,7 +239,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
   return (
     <div className="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-100 animate-slide-up">
       <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-        <Plus className="w-6 h-6 mr-2 text-indigo-600" />
+        <Plus className="w-6 h-6 mr-2 text-linkedin-600" />
         Add Work Experience
       </h2>
       
@@ -264,7 +264,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
                 {companySuggestions.map((c) => (
                   <li
                     key={c.domain}
-                    className="flex items-center px-4 py-2 cursor-pointer hover:bg-indigo-50"
+                    className="flex items-center px-4 py-2 cursor-pointer hover:bg-linkedin-50"
                     onMouseDown={() => handleCompanySelect(c)}
                   >
                     <img src={c.logo} alt={c.name} className="w-6 h-6 mr-2 bg-white rounded" onError={e => { e.target.style.display = 'none'; }} />
@@ -291,7 +291,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
                 {positionSuggestions.map((title, index) => (
                   <li
                     key={index}
-                    className="flex items-center px-4 py-2 cursor-pointer hover:bg-indigo-50"
+                    className="flex items-center px-4 py-2 cursor-pointer hover:bg-linkedin-50"
                     onMouseDown={() => handlePositionSelect(title)}
                   >
                     <span>{title}</span>
@@ -319,7 +319,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
               {locationSuggestions.map((city, index) => (
                 <li
                   key={index}
-                  className="flex items-center px-4 py-2 cursor-pointer hover:bg-indigo-50"
+                  className="flex items-center px-4 py-2 cursor-pointer hover:bg-linkedin-50"
                   onMouseDown={() => handleLocationSelect(city)}
                 >
                   <span>{city}</span>
@@ -346,7 +346,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
                 name="current"
                 checked={formData.current}
                 onChange={handleInputChange}
-                className="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500"
+                className="w-4 h-4 text-linkedin-600 rounded focus:ring-linkedin-500"
               />
               <span className="ml-2 text-sm text-gray-600">Currently working here</span>
             </label>
@@ -369,7 +369,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
             value={formData.description}
             onChange={handleInputChange}
             rows={3}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-linkedin-500 focus:border-transparent transition-all duration-200"
             placeholder="Brief description of your role and responsibilities..."
           />
         </div>
@@ -385,7 +385,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
                 type="text"
                 value={achievement}
                 onChange={(e) => handleAchievementChange(index, e.target.value)}
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-linkedin-500 focus:border-transparent transition-all duration-200"
                 placeholder="e.g., Increased team productivity by 25%"
               />
               {formData.achievements.length > 1 && (
@@ -402,7 +402,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
           <button
             type="button"
             onClick={addAchievement}
-            className="flex items-center text-indigo-600 hover:text-indigo-700 font-medium transition-colors duration-200"
+            className="flex items-center text-linkedin-600 hover:text-linkedin-700 font-medium transition-colors duration-200"
           >
             <Plus className="w-4 h-4 mr-1" />
             Add Achievement
