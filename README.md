@@ -38,6 +38,7 @@ A beautiful and intuitive React application for tracking and showcasing your pro
 - **Lucide React** – Beautiful and consistent icons
 - **Clearbit API** – Company data and logo integration
 - **JSearch API** – Job titles and position data for comprehensive autocomplete
+- **JSON Configuration** – External job titles data for maintainability
 - **Modern JavaScript** – ES6+ features and best practices
 
 ## 📸 Preview
@@ -112,26 +113,37 @@ This creates an optimized production build in the `build` folder.
 ## 📁 Project Structure
 
 ```
-src/
-├── components/
-│   ├── cards/
-│   │   ├── ExperienceCard.js    # Individual experience display
-│   │   └── SummaryCard.js       # Total experience summary
-│   ├── common/
-│   │   ├── Button.js            # Reusable button component
-│   │   └── Input.js             # Enhanced input with icons
-│   ├── forms/
-│   │   └── ExperienceForm.js    # Experience input form
-│   └── layout/
-│       ├── EmptyState.js        # Empty state component
-│       └── Header.js            # Application header
-├── hooks/
-│   └── useExperience.js         # Custom hook for state management
-├── utils/
-│   └── dateUtils.js             # Date calculation utilities
-├── App.js                       # Main application component
-├── index.css                    # Global styles and animations
-└── index.js                     # Application entry point
+work-experience-tracker/
+├── public/
+│   ├── index.html               # Main HTML template
+│   └── favicon.ico              # Application favicon
+├── src/
+│   ├── components/
+│   │   ├── cards/
+│   │   │   ├── ExperienceCard.js    # Individual experience display
+│   │   │   └── SummaryCard.js       # Total experience summary
+│   │   ├── common/
+│   │   │   ├── Button.js            # Reusable button component
+│   │   │   └── Input.js             # Enhanced input with icons
+│   │   ├── forms/
+│   │   │   └── ExperienceForm.js    # Experience input form with autocomplete
+│   │   └── layout/
+│   │       ├── EmptyState.js        # Empty state component
+│   │       └── Header.js            # Application header
+│   ├── config/
+│   │   └── jobTitles.json           # Job titles configuration (300+ positions)
+│   ├── hooks/
+│   │   └── useExperience.js         # Custom hook for state management
+│   ├── utils/
+│   │   └── dateUtils.js             # Date calculation utilities
+│   ├── App.js                       # Main application component
+│   ├── index.css                    # Global styles and animations
+│   └── index.js                     # Application entry point
+├── .gitignore                      # Git ignore rules
+├── package.json                     # Dependencies and scripts
+├── postcss.config.js                # PostCSS configuration
+├── tailwind.config.js               # Tailwind CSS configuration
+└── README.md                        # Project documentation
 ```
 
 ## 🔧 Configuration
@@ -198,6 +210,15 @@ The app uses two external APIs for enhanced functionality:
 - `npm run build` – Build for production
 - `npm test` – Run test suite
 - `npm run eject` – Eject from Create React App
+
+### Project Cleanup
+
+The project has been cleaned up to remove unnecessary files:
+- Removed empty `App.css` file
+- Removed unused `reportWebVitals.js`
+- Removed `.DS_Store` files
+- Removed `.vite` directory (not needed for Create React App)
+- Organized job titles in external JSON configuration
 
 ### Contributing
 
