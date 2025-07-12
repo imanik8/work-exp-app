@@ -13,6 +13,7 @@ A beautiful and intuitive React application for tracking and showcasing your pro
 - **📊 Smart Experience Management**
   - Real-time calculations: Automatically calculates total work experience
   - Company autocomplete: Integrated with Clearbit API for company logos and details
+  - **Job titles autocomplete: Fast local search + JSearch API for comprehensive position suggestions**
   - Flexible date handling: Support for current positions and precise duration calculations
   - Achievement tracking: Add and manage key accomplishments for each role
 
@@ -36,6 +37,7 @@ A beautiful and intuitive React application for tracking and showcasing your pro
 - **Tailwind CSS** – Utility-first CSS framework for rapid styling
 - **Lucide React** – Beautiful and consistent icons
 - **Clearbit API** – Company data and logo integration
+- **JSearch API** – Job titles and position data for comprehensive autocomplete
 - **Modern JavaScript** – ES6+ features and best practices
 
 ## 📸 Preview
@@ -66,11 +68,19 @@ The application features:
    ```bash
    npm install
    ```
-3. **Start the development server**
+3. **Set up API keys (Optional but recommended)**
+   ```bash
+   # Create environment file
+   echo "REACT_APP_JSEARCH_API_KEY=your_api_key_here" > .env.local
+   ```
+   - Get your JSearch API key from [RapidAPI JSearch](https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch)
+   - Replace `your_api_key_here` with your actual API key
+   - **Note:** The app works without the API key using local job titles only
+4. **Start the development server**
    ```bash
    npm start
    ```
-4. **Open your browser**
+5. **Open your browser**
    - Navigate to [http://localhost:3000](http://localhost:3000) to view the application
 
 ### Build for Production
@@ -85,7 +95,8 @@ This creates an optimized production build in the `build` folder.
 - **Add Your First Experience**
   - Click "Add Your First Experience" or the "+" button
   - Fill in company details (autocomplete will suggest logos)
-  - Add position, location, and date information
+  - **Add position with smart autocomplete** (60+ local titles + API suggestions)
+  - Add location and date information
   - Include job description and key achievements
 
 - **Manage Your Timeline**
@@ -125,6 +136,24 @@ src/
 
 ## 🔧 Configuration
 
+### **API Keys Setup**
+
+The app uses two external APIs for enhanced functionality:
+
+#### **JSearch API (Job Titles Autocomplete)**
+- **Purpose:** Provides comprehensive job titles and position suggestions
+- **Setup:** 
+  1. Get API key from [RapidAPI JSearch](https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch)
+  2. Create `.env.local` file: `REACT_APP_JSEARCH_API_KEY=your_api_key_here`
+- **Fallback:** App works perfectly without API using 60+ local job titles
+- **Usage:** Hybrid approach - fast local search + smart API fallback
+
+#### **Clearbit API (Company Data)**
+- **Purpose:** Company logos and information
+- **Setup:** No API key required (free tier)
+- **Usage:** Automatic company logo fetching
+
+### **Styling Configuration**
 - **Tailwind CSS**
   - The project uses Tailwind CSS for styling. Configuration is in `tailwind.config.js`:
     - Content paths for purging unused styles
@@ -155,8 +184,11 @@ src/
 ## 🔒 Privacy & Data
 
 - **Local storage:** All data is stored in browser memory during the session
-- **No external storage:** No data is sent to external servers (except company autocomplete)
-- **API usage:** Clearbit API is used only for company logo fetching
+- **No external storage:** No data is sent to external servers (except APIs)
+- **API usage:** 
+  - Clearbit API: Company logo fetching
+  - JSearch API: Job titles autocomplete (optional, falls back to local data)
+- **Hybrid approach:** Fast local search + smart API fallback for comprehensive results
 
 ## 🛠️ Development
 
@@ -182,6 +214,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🤝 Acknowledgments
 
 - Clearbit for company data and logos
+- JSearch API for comprehensive job titles data
 - Lucide for beautiful icons
 - Tailwind CSS for the styling framework
 - React team for the amazing framework

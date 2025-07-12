@@ -3,6 +3,37 @@ import { Plus, Building2, MapPin, Calendar, Award, Trash2 } from 'lucide-react';
 import Input from '../common/Input';
 import Button from '../common/Button';
 
+// Common job titles for fast autocomplete
+const jobTitles = [
+  'Software Engineer', 'Senior Software Engineer', 'Lead Software Engineer',
+  'Software Developer', 'Full Stack Developer', 'Frontend Developer', 'Backend Developer',
+  'Mobile Developer', 'iOS Developer', 'Android Developer', 'React Developer',
+  'Vue.js Developer', 'Angular Developer', 'Node.js Developer', 'Python Developer',
+  'Java Developer', 'C# Developer', 'PHP Developer', 'Ruby Developer', 'Go Developer',
+  'DevOps Engineer', 'Cloud Engineer', 'Data Engineer', 'Machine Learning Engineer',
+  'AI Engineer', 'QA Engineer', 'Test Engineer', 'Security Engineer', 'Network Engineer',
+  'Data Scientist', 'Data Analyst', 'Business Analyst', 'Product Manager',
+  'Engineering Manager', 'Technical Lead', 'Team Lead', 'Scrum Master',
+  'Project Manager', 'Program Manager', 'CTO', 'VP of Engineering',
+  'UX Designer', 'UI Designer', 'Product Designer', 'Graphic Designer',
+  'Marketing Manager', 'Digital Marketing Manager', 'Sales Manager',
+  'Business Development Manager', 'Consultant', 'Operations Manager',
+  'Financial Analyst', 'HR Manager', 'Recruiter', 'Lawyer', 'Attorney',
+  'Nurse', 'Physician', 'Teacher', 'Professor', 'Research Scientist',
+  'Content Writer', 'Editor', 'Customer Service Representative',
+  'Administrative Assistant', 'Executive Assistant', 'Manager', 'Director',
+  'CEO', 'Founder', 'Entrepreneur', 'Freelancer', 'Contractor'
+];
+
+// Function to filter job titles based on search query
+const filterJobTitles = (query) => {
+  if (!query || query.length < 2) return [];
+  const lowercaseQuery = query.toLowerCase();
+  return jobTitles
+    .filter(title => title.toLowerCase().includes(lowercaseQuery))
+    .slice(0, 10);
+};
+
 const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
   const [formData, setFormData] = useState({
     company: '',
@@ -19,6 +50,9 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
   const [companyQuery, setCompanyQuery] = useState('');
   const [companySuggestions, setCompanySuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [positionQuery, setPositionQuery] = useState('');
+  const [positionSuggestions, setPositionSuggestions] = useState([]);
+  const [showPositionSuggestions, setShowPositionSuggestions] = useState(false);
 
   useEffect(() => {
     if (companyQuery.length < 2) {
@@ -32,6 +66,45 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
       .catch(() => setCompanySuggestions([]));
     return () => controller.abort();
   }, [companyQuery]);
+
+  useEffect(() => {
+    if (positionQuery.length < 2) {
+      setPositionSuggestions([]);
+      return;
+    }
+    
+    // First, use fast local search for instant results
+    const localSuggestions = filterJobTitles(positionQuery);
+    setPositionSuggestions(localSuggestions);
+    
+    // Then, optionally fetch from API for more comprehensive results
+    // Only if we have less than 5 local suggestions and query is longer
+    if (localSuggestions.length < 5 && positionQuery.length >= 3) {
+      const controller = new AbortController();
+              fetch(`https://jsearch.p.rapidapi.com/search?query=${encodeURIComponent(positionQuery)}&num_pages=1`, {
+          headers: {
+            'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
+            'X-RapidAPI-Key': process.env.REACT_APP_JSEARCH_API_KEY
+          },
+        signal: controller.signal
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.data && Array.isArray(data.data)) {
+            // Extract unique job titles from API results
+            const apiTitles = [...new Set(data.data.map(job => job.job_title).filter(Boolean))];
+            // Combine local and API results, removing duplicates
+            const allTitles = [...new Set([...localSuggestions, ...apiTitles])];
+            setPositionSuggestions(allTitles.slice(0, 15)); // Show more results when API is used
+          }
+        })
+        .catch(() => {
+          // If API fails, keep local suggestions
+          console.log('API search failed, using local suggestions only');
+        });
+      return () => controller.abort();
+    }
+  }, [positionQuery]);
 
   const handleCompanyInput = (e) => {
     const value = e.target.value;
@@ -49,6 +122,19 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
     }));
     setCompanyQuery(company.name);
     setShowSuggestions(false);
+  };
+
+  const handlePositionInput = (e) => {
+    const value = e.target.value;
+    setPositionQuery(value);
+    setFormData(prev => ({ ...prev, position: value }));
+    setShowPositionSuggestions(true);
+  };
+
+  const handlePositionSelect = (title) => {
+    setFormData(prev => ({ ...prev, position: title }));
+    setPositionQuery(title);
+    setShowPositionSuggestions(false);
   };
 
   const handleInputChange = (e) => {
@@ -148,14 +234,32 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
               </ul>
             )}
           </div>
-          <Input
-            label="Position"
-            name="position"
-            value={formData.position}
-            onChange={handleInputChange}
-            placeholder="e.g., Software Engineer"
-            required
-          />
+          <div className="relative">
+            <Input
+              label="Position"
+              name="position"
+              value={positionQuery}
+              onChange={handlePositionInput}
+              placeholder="e.g., Software Engineer"
+              required
+              autoComplete="off"
+              onFocus={() => setShowPositionSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowPositionSuggestions(false), 200)}
+            />
+            {showPositionSuggestions && positionSuggestions.length > 0 && (
+              <ul className="absolute z-10 bg-white border border-gray-200 w-full mt-1 rounded shadow-lg max-h-48 overflow-y-auto top-full left-0">
+                {positionSuggestions.map((title, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center px-4 py-2 cursor-pointer hover:bg-indigo-50"
+                    onMouseDown={() => handlePositionSelect(title)}
+                  >
+                    <span>{title}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
 
         <Input
