@@ -330,26 +330,17 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          <Input
-            label="Start Date"
-            name="startDate"
-            type="date"
-            value={formData.startDate}
-            onChange={handleInputChange}
-            icon={Calendar}
-            required
-          />
           <div className="space-y-2">
             <Input
-              label="End Date"
-              name="endDate"
+              label="Start Date"
+              name="startDate"
               type="date"
-              value={formData.endDate}
+              value={formData.startDate}
               onChange={handleInputChange}
               icon={Calendar}
-              disabled={formData.current}
+              required
             />
-            <label className="flex items-center mt-2">
+            <label className="flex items-center">
               <input
                 type="checkbox"
                 name="current"
@@ -360,6 +351,15 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
               <span className="ml-2 text-sm text-gray-600">Currently working here</span>
             </label>
           </div>
+          <Input
+            label="End Date"
+            name="endDate"
+            type="date"
+            value={formData.endDate}
+            onChange={handleInputChange}
+            icon={Calendar}
+            disabled={formData.current}
+          />
         </div>
 
         <div className="space-y-2">
