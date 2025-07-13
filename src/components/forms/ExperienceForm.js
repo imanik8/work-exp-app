@@ -45,12 +45,30 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
   const [companyQuery, setCompanyQuery] = useState('');
   const [companySuggestions, setCompanySuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [companySelectedIndex, setCompanySelectedIndex] = useState(-1);
+  
   const [positionQuery, setPositionQuery] = useState('');
   const [positionSuggestions, setPositionSuggestions] = useState([]);
   const [showPositionSuggestions, setShowPositionSuggestions] = useState(false);
+  const [positionSelectedIndex, setPositionSelectedIndex] = useState(-1);
+  
   const [locationQuery, setLocationQuery] = useState('');
   const [locationSuggestions, setLocationSuggestions] = useState([]);
   const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
+  const [locationSelectedIndex, setLocationSelectedIndex] = useState(-1);
+
+  // Reset selected indices when suggestions change
+  useEffect(() => {
+    setCompanySelectedIndex(-1);
+  }, [companySuggestions]);
+
+  useEffect(() => {
+    setPositionSelectedIndex(-1);
+  }, [positionSuggestions]);
+
+  useEffect(() => {
+    setLocationSelectedIndex(-1);
+  }, [locationSuggestions]);
 
   useEffect(() => {
     if (companyQuery.length < 2) {
@@ -134,6 +152,94 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
     }
   }, [locationQuery]);
 
+  // Keyboard navigation handlers
+  const handleCompanyKeyDown = (e) => {
+    if (!showSuggestions || companySuggestions.length === 0) return;
+    
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setCompanySelectedIndex(prev => 
+          prev < companySuggestions.length - 1 ? prev + 1 : 0
+        );
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setCompanySelectedIndex(prev => 
+          prev > 0 ? prev - 1 : companySuggestions.length - 1
+        );
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (companySelectedIndex >= 0) {
+          handleCompanySelect(companySuggestions[companySelectedIndex]);
+        }
+        break;
+      case 'Escape':
+        setShowSuggestions(false);
+        setCompanySelectedIndex(-1);
+        break;
+    }
+  };
+
+  const handlePositionKeyDown = (e) => {
+    if (!showPositionSuggestions || positionSuggestions.length === 0) return;
+    
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setPositionSelectedIndex(prev => 
+          prev < positionSuggestions.length - 1 ? prev + 1 : 0
+        );
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setPositionSelectedIndex(prev => 
+          prev > 0 ? prev - 1 : positionSuggestions.length - 1
+        );
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (positionSelectedIndex >= 0) {
+          handlePositionSelect(positionSuggestions[positionSelectedIndex]);
+        }
+        break;
+      case 'Escape':
+        setShowPositionSuggestions(false);
+        setPositionSelectedIndex(-1);
+        break;
+    }
+  };
+
+  const handleLocationKeyDown = (e) => {
+    if (!showLocationSuggestions || locationSuggestions.length === 0) return;
+    
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setLocationSelectedIndex(prev => 
+          prev < locationSuggestions.length - 1 ? prev + 1 : 0
+        );
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setLocationSelectedIndex(prev => 
+          prev > 0 ? prev - 1 : locationSuggestions.length - 1
+        );
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (locationSelectedIndex >= 0) {
+          handleLocationSelect(locationSuggestions[locationSelectedIndex]);
+        }
+        break;
+      case 'Escape':
+        setShowLocationSuggestions(false);
+        setLocationSelectedIndex(-1);
+        break;
+    }
+  };
+
   const handleCompanyInput = (e) => {
     const value = e.target.value;
     setCompanyQuery(value);
@@ -150,6 +256,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
     }));
     setCompanyQuery(company.name);
     setShowSuggestions(false);
+    setCompanySelectedIndex(-1);
   };
 
   const handlePositionInput = (e) => {
@@ -163,6 +270,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
     setFormData(prev => ({ ...prev, position: title }));
     setPositionQuery(title);
     setShowPositionSuggestions(false);
+    setPositionSelectedIndex(-1);
   };
 
   const handleLocationInput = (e) => {
@@ -175,6 +283,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
     setFormData(prev => ({ ...prev, location: city }));
     setLocationQuery(city);
     setShowLocationSuggestions(false);
+    setLocationSelectedIndex(-1);
   };
 
   const handleInputChange = (e) => {
@@ -199,41 +308,42 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
   };
 
   const removeAchievement = (index) => {
-    if (formData.achievements.length > 1) {
-      const newAchievements = formData.achievements.filter((_, i) => i !== index);
-      setFormData(prev => ({ ...prev, achievements: newAchievements }));
-    }
+    setFormData(prev => ({
+      ...prev,
+      achievements: prev.achievements.filter((_, i) => i !== index)
+    }));
   };
 
   const handleSubmit = () => {
-    let updatedFormData = { ...formData };
-    if (!formData.companyLogo && companySuggestions.length > 0) {
-      // Try to match the company name to a suggestion
-      const match = companySuggestions.find(
-        c => c.name.toLowerCase() === formData.company.toLowerCase()
-      ) || companySuggestions[0];
-      if (match) {
-        updatedFormData.companyLogo = match.logo;
-        updatedFormData.companyDomain = match.domain;
-        updatedFormData.company = match.name;
-      }
+    if (!formData.company || !formData.position || !formData.startDate) {
+      alert('Please fill in all required fields');
+      return;
     }
-    if (updatedFormData.company && updatedFormData.position && updatedFormData.startDate) {
-      onSubmit(updatedFormData);
-      setFormData({
-        company: '',
-        companyDomain: '',
-        companyLogo: '',
-        position: '',
-        location: '',
-        startDate: '',
-        endDate: '',
-        current: false,
-        description: '',
-        achievements: ['']
-      });
-      setCompanyQuery('');
-    }
+
+    onSubmit({
+      ...formData,
+      id: Date.now().toString()
+    });
+
+    // Reset form
+    setFormData({
+      company: '',
+      companyDomain: '',
+      companyLogo: '',
+      position: '',
+      location: '',
+      startDate: '',
+      endDate: '',
+      current: false,
+      description: '',
+      achievements: ['']
+    });
+    setCompanyQuery('');
+    setPositionQuery('');
+    setLocationQuery('');
+    setCompanySelectedIndex(-1);
+    setPositionSelectedIndex(-1);
+    setLocationSelectedIndex(-1);
   };
 
   return (
@@ -251,6 +361,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
               name="company"
               value={companyQuery}
               onChange={handleCompanyInput}
+              onKeyDown={handleCompanyKeyDown}
               placeholder="e.g., Google, Microsoft"
               icon={Building2}
               iconImg={formData.companyLogo || null}
@@ -261,11 +372,16 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
             />
             {showSuggestions && companySuggestions.length > 0 && (
               <ul className="absolute z-10 bg-white border border-gray-200 w-full mt-1 rounded shadow-lg max-h-48 overflow-y-auto top-full left-0">
-                {companySuggestions.map((c) => (
+                {companySuggestions.map((c, index) => (
                   <li
                     key={c.domain}
-                    className="flex items-center px-4 py-2 cursor-pointer hover:bg-linkedin-50"
+                    className={`flex items-center px-4 py-2 cursor-pointer ${
+                      index === companySelectedIndex 
+                        ? 'bg-linkedin-100 text-linkedin-800' 
+                        : 'hover:bg-linkedin-50'
+                    }`}
                     onMouseDown={() => handleCompanySelect(c)}
+                    onMouseEnter={() => setCompanySelectedIndex(index)}
                   >
                     <img src={c.logo} alt={c.name} className="w-6 h-6 mr-2 bg-white rounded" onError={e => { e.target.style.display = 'none'; }} />
                     <span>{c.name}</span>
@@ -280,6 +396,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
               name="position"
               value={positionQuery}
               onChange={handlePositionInput}
+              onKeyDown={handlePositionKeyDown}
               placeholder="e.g., Software Engineer"
               required
               autoComplete="off"
@@ -291,8 +408,13 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
                 {positionSuggestions.map((title, index) => (
                   <li
                     key={index}
-                    className="flex items-center px-4 py-2 cursor-pointer hover:bg-linkedin-50"
+                    className={`flex items-center px-4 py-2 cursor-pointer ${
+                      index === positionSelectedIndex 
+                        ? 'bg-linkedin-100 text-linkedin-800' 
+                        : 'hover:bg-linkedin-50'
+                    }`}
                     onMouseDown={() => handlePositionSelect(title)}
+                    onMouseEnter={() => setPositionSelectedIndex(index)}
                   >
                     <span>{title}</span>
                   </li>
@@ -308,6 +430,7 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
             name="location"
             value={locationQuery}
             onChange={handleLocationInput}
+            onKeyDown={handleLocationKeyDown}
             placeholder="e.g., San Francisco, CA"
             icon={MapPin}
             autoComplete="off"
@@ -319,8 +442,13 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
               {locationSuggestions.map((city, index) => (
                 <li
                   key={index}
-                  className="flex items-center px-4 py-2 cursor-pointer hover:bg-linkedin-50"
+                  className={`flex items-center px-4 py-2 cursor-pointer ${
+                    index === locationSelectedIndex 
+                      ? 'bg-linkedin-100 text-linkedin-800' 
+                      : 'hover:bg-linkedin-50'
+                  }`}
                   onMouseDown={() => handleLocationSelect(city)}
+                  onMouseEnter={() => setLocationSelectedIndex(index)}
                 >
                   <span>{city}</span>
                 </li>
