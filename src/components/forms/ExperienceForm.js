@@ -179,6 +179,9 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
         setShowSuggestions(false);
         setCompanySelectedIndex(-1);
         break;
+      default:
+        // Handle other keys normally
+        break;
     }
   };
 
@@ -208,6 +211,9 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
         setShowPositionSuggestions(false);
         setPositionSelectedIndex(-1);
         break;
+      default:
+        // Handle other keys normally
+        break;
     }
   };
 
@@ -236,6 +242,9 @@ const ExperienceForm = ({ onSubmit, onCancel, showCancel }) => {
       case 'Escape':
         setShowLocationSuggestions(false);
         setLocationSelectedIndex(-1);
+        break;
+      default:
+        // Handle other keys normally
         break;
     }
   };
