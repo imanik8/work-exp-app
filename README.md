@@ -260,3 +260,48 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 Built with ❤️ using React and modern web technologies
+
+## 🧪 Running & Writing Tests
+
+This project uses **Jest** and **React Testing Library** for unit testing.
+
+### Test Directory Structure
+
+All test files are placed in a single `src/__tests__` directory. For example:
+
+```
+src/__tests__/Button.test.js
+src/__tests__/Input.test.js
+src/__tests__/Header.test.js
+```
+
+### Running Tests
+
+To run all tests:
+
+```bash
+npm test
+```
+
+or
+
+```bash
+yarn test
+```
+
+This will run all test files matching `*.test.js` in the project.
+
+### Writing Tests
+- Use [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for rendering and interacting with components.
+- Use [Jest](https://jestjs.io/docs/getting-started) for assertions and mocking.
+- Place new test files in the `src/__tests__` directory.
+
+### Test Coverage
+
+To generate a test coverage report, run:
+
+```bash
+npm test -- --coverage
+```
+
+This will output a summary in the terminal and generate a detailed HTML report in the `coverage/` directory. Open `coverage/lcov-report/index.html` in your browser to view the full coverage report.
