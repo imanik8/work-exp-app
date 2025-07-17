@@ -273,6 +273,8 @@ All test files are placed in a single `src/__tests__` directory. For example:
 src/__tests__/Button.test.js
 src/__tests__/Input.test.js
 src/__tests__/Header.test.js
+src/__tests__/ExperienceCard.test.js
+src/__tests__/SummaryCard.test.js
 ```
 
 ### Running Tests
