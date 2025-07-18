@@ -275,6 +275,8 @@ src/__tests__/Input.test.js
 src/__tests__/Header.test.js
 src/__tests__/ExperienceCard.test.js
 src/__tests__/SummaryCard.test.js
+src/__tests__/EmptyState.test.js
+src/__tests__/ExperienceForm.test.js
 ```
 
 ### Running Tests
