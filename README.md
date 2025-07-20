@@ -323,3 +323,18 @@ This will build the app and publish it to the `gh-pages` branch. Your app will b
 https://gitforaniket.github.io/work-exp-app/
 
 If you make changes, just run `npm run deploy` again to update the live site.
+
+## ⚙️ CI/CD with GitHub Actions
+
+This project uses GitHub Actions to automatically build, test, and deploy the app to GitHub Pages on every push to the `main` branch.
+
+- The workflow is defined in `.github/workflows/deploy.yml`.
+- It will:
+  1. Check out the code
+  2. Set up Node.js
+  3. Install dependencies
+  4. Run all tests (with coverage)
+  5. Build the project
+  6. Deploy the build to the `gh-pages` branch (GitHub Pages)
+
+You can view workflow runs and logs in the **Actions** tab of your GitHub repository.
