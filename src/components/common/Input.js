@@ -14,10 +14,12 @@ const Input = ({
   className = '',
   ...props 
 }) => {
+  // Use name as id if provided, otherwise generate a random id
+  const inputId = name || `input-${Math.random().toString(36).substr(2, 9)}`;
   return (
     <div className={`space-y-2 ${className}`}>
       {label && (
-        <label className="block text-sm font-medium text-gray-700">
+        <label htmlFor={inputId} className="block text-sm font-medium text-gray-700">
           {label} {required && <span className="text-red-500">*</span>}
         </label>
       )}
@@ -37,6 +39,7 @@ const Input = ({
           </span>
         )}
         <input
+          id={inputId}
           type={type}
           name={name}
           value={value}

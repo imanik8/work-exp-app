@@ -27,7 +27,7 @@ const ExperienceCard = ({ experience, onRemove, index }) => {
             )}
             <div>
               <h3 className="text-xl font-bold text-gray-800">{experience.position}</h3>
-              <p className="text-lg text-linkedin-600 font-semibold">{experience.company}</p>
+              <p className="text-lg text-indigo-600 font-semibold">{experience.company}</p>
             </div>
           </div>
           
@@ -45,7 +45,7 @@ const ExperienceCard = ({ experience, onRemove, index }) => {
                 {experience.current ? ' Present' : ` ${formatDate(experience.endDate)}`}
               </span>
             </div>
-            <div className="bg-linkedin-100 text-linkedin-800 px-3 py-1 rounded-full text-sm font-medium">
+            <div className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">
               {calculateDuration(experience.startDate, experience.endDate, experience.current)}
             </div>
           </div>
@@ -63,7 +63,7 @@ const ExperienceCard = ({ experience, onRemove, index }) => {
               <ul className="space-y-2">
                 {experience.achievements.map((achievement, i) => (
                   <li key={i} className="flex items-start">
-                    <div className="w-2 h-2 bg-linkedin-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-indigo-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                     <span className="text-gray-700">{achievement}</span>
                   </li>
                 ))}
