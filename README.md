@@ -309,3 +309,17 @@ npm test -- --coverage
 ```
 
 This will output a summary in the terminal and generate a detailed HTML report in the `coverage/` directory. Open `coverage/lcov-report/index.html` in your browser to view the full coverage report.
+
+## 🚀 Deployment to GitHub Pages
+
+This app can be deployed to GitHub Pages using the following commands:
+
+```bash
+npm run deploy
+```
+
+This will build the app and publish it to the `gh-pages` branch. Your app will be live at:
+
+https://gitforaniket.github.io/work-exp-app/
+
+If you make changes, just run `npm run deploy` again to update the live site.
