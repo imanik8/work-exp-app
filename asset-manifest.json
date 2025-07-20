@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/work-exp-app/static/css/main.be283189.css",
+    "main.js": "/work-exp-app/static/js/main.b7d52436.js",
+    "index.html": "/work-exp-app/index.html",
+    "main.be283189.css.map": "/work-exp-app/static/css/main.be283189.css.map",
+    "main.b7d52436.js.map": "/work-exp-app/static/js/main.b7d52436.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.be283189.css",
+    "static/js/main.b7d52436.js"
+  ]
+}
