@@ -36,7 +36,7 @@ async function addProfile(page) {
   await page.getByLabel('Location').fill(profile.location);
   await page.getByLabel('LinkedIn URL').fill(profile.linkedin);
   await page.getByLabel('Website / Portfolio').fill(profile.website);
-  await page.getByLabel('Professional Summary').fill(profile.summary);
+  await page.locator('textarea[name="summary"]').fill(profile.summary);
   await page.getByRole('button', { name: 'Save Profile' }).click();
   await expect(page.getByRole('button', { name: /edit profile/i })).toBeVisible();
 }
