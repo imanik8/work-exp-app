@@ -16,6 +16,7 @@ async function openResume(page) {
   await expect(page.getByRole('heading', { name: 'Resume Builder' })).toBeVisible();
   await page.evaluate(() => localStorage.clear());
   await page.reload();
+  await expect(page.getByRole('heading', { name: 'Resume Builder' })).toBeVisible();
 }
 
 async function addProfile(page) {
@@ -60,7 +61,14 @@ function assertNoHorizontalOverflow(page) {
 }
 
 test.describe('Resume Builder browser regression', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page }, testInfo) => {
+    const desktopTest = testInfo.title.startsWith('desktop ');
+    const mobileTest = testInfo.title.startsWith('mobile ');
+    const isDesktop = testInfo.project.name === 'chromium-desktop';
+    const isMobile = testInfo.project.name === 'chromium-mobile';
+
+    // Avoid executing setup for tests that are intentionally skipped on this project.
+    if ((desktopTest && !isDesktop) || (mobileTest && !isMobile)) return;
     await openResume(page);
   });
 
