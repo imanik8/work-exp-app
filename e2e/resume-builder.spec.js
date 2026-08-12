@@ -68,6 +68,8 @@ function assertNoHorizontalOverflow(page) {
   return page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1);
 }
 
+const preview = (page) => page.getByTestId('resume-preview');
+
 async function assertContactAlignment(page) {
   const items = preview(page).getByTestId('resume-contact-item');
   const count = await items.count();
@@ -85,8 +87,6 @@ async function assertContactAlignment(page) {
     expect(Math.abs(iconCenter - textCenter)).toBeLessThanOrEqual(2);
   }
 }
-
-const preview = (page) => page.getByTestId('resume-preview');
 
 async function expectPreviewProject(page) {
   await expect(preview(page).getByRole('heading', { name: 'Developer Platform' })).toBeVisible();
