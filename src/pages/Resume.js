@@ -74,7 +74,7 @@ const Resume = () => {
         {showProfileForm && <ProfileForm profile={profile} onUpdate={handleProfileUpdate} onCancel={() => setShowProfileForm(false)} />}
         {showSectionsForm && <ResumeSectionsForm education={education} certifications={certifications} projects={projects} onChange={(key, value) => updateSections({ [key]: value })} />}
 
-        <div className="print:shadow-none bg-white dark:bg-slate-800 rounded-2xl shadow-2xl overflow-hidden"><TemplateComponent ref={resumeRef} profile={profile} experiences={experiences} education={education} certifications={certifications} projects={projects} /></div>
+        <div data-testid="resume-preview" className="print:shadow-none bg-white dark:bg-slate-800 rounded-2xl shadow-2xl overflow-hidden"><TemplateComponent ref={resumeRef} profile={profile} experiences={experiences} education={education} certifications={certifications} projects={projects} /></div>
 
         {!hasProfile && !showProfileForm && <div className="text-center mt-12 p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-xl"><Eye className="w-16 h-16 mx-auto text-gray-400 mb-4" /><h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">Get Started</h3><p className="text-gray-600 dark:text-gray-300 mb-6">Add your profile information to see your resume preview.</p><Button onClick={() => setShowProfileForm(true)}><Edit className="w-4 h-4 mr-2" />Add Profile Info</Button></div>}
       </div>
