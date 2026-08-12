@@ -33,6 +33,7 @@ async function addProfile(page) {
 }
 
 async function addAllSections(page) {
+  await page.getByRole('button', { name: /add resume sections/i }).click();
   await page.getByRole('button', { name: /add education/i }).click();
   await page.getByLabel('Degree').fill('B.Tech in Computer Science');
   await page.getByLabel('Institution').fill('Example Institute of Technology');
@@ -63,7 +64,8 @@ test.describe('Resume Builder browser regression', () => {
     await openResume(page);
   });
 
-  test('desktop builder supports profile, all sections, templates, persistence and PDF export', async ({ page }) => {
+  test('desktop builder supports profile, all sections, templates, persistence and PDF export', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'chromium-desktop', 'Desktop-only workflow');
     await addProfile(page);
     await addAllSections(page);
 
@@ -90,23 +92,25 @@ test.describe('Resume Builder browser regression', () => {
     const download = await downloadPromise;
     expect(download.suggestedFilename()).toMatch(/Resume_Alex Engineer_\d{4}-\d{2}-\d{2}\.pdf/);
 
-    await page.screenshot({ path: 'test-results/resume-desktop-full.png', fullPage: true });
+    await page.screenshot({ path: testInfo.outputPath('resume-desktop-full.png'), fullPage: true });
   });
 
-  test('desktop dark mode keeps the builder readable and within viewport', async ({ page }) => {
+  test('desktop dark mode keeps the builder readable and within viewport', async ({ page, testInfo }) => {
+    test.skip(testInfo.project.name !== 'chromium-desktop', 'Desktop-only workflow');
     await page.evaluate(() => document.documentElement.classList.add('dark'));
     await expect(page.getByRole('heading', { name: 'Resume Builder' })).toBeVisible();
     expect(await assertNoHorizontalOverflow(page)).toBeTruthy();
-    await page.screenshot({ path: 'test-results/resume-desktop-dark.png', fullPage: true });
+    await page.screenshot({ path: testInfo.outputPath('resume-desktop-dark.png'), fullPage: true });
   });
 
-  test('mobile layout has no horizontal overflow and exposes all key controls', async ({ page }) => {
+  test('mobile layout has no horizontal overflow and exposes all key controls', async ({ page, testInfo }) => {
+    test.skip(testInfo.project.name !== 'chromium-mobile', 'Mobile-only workflow');
     await expect(page.getByRole('heading', { name: 'Resume Builder' })).toBeVisible();
     await expect(page.getByRole('button', { name: /add profile info/i })).toBeVisible();
     await expect(page.getByRole('button', { name: /^Classic/ })).toBeVisible();
     await expect(page.getByRole('button', { name: /^Modern/ })).toBeVisible();
     await expect(page.getByRole('button', { name: /^Minimal/ })).toBeVisible();
     expect(await assertNoHorizontalOverflow(page)).toBeTruthy();
-    await page.screenshot({ path: 'test-results/resume-mobile.png', fullPage: true });
+    await page.screenshot({ path: testInfo.outputPath('resume-mobile.png'), fullPage: true });
   });
 });
