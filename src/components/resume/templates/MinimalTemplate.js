@@ -3,6 +3,15 @@ import { Mail, Phone, MapPin, Linkedin, Globe } from 'lucide-react';
 import { formatDate, calculateDuration } from '../../../utils/dateUtils';
 import ResumeAdditionalSections from '../ResumeAdditionalSections';
 
+const contactItem = (Icon, content, key) => (
+  <div key={key} data-testid="resume-contact-item" className="inline-flex items-center text-sm text-gray-600 font-light leading-5">
+    <span className="inline-flex items-center justify-center w-3.5 h-5 shrink-0 mr-1.5">
+      <Icon className="w-3.5 h-3.5 block" />
+    </span>
+    <span className="leading-5">{content}</span>
+  </div>
+);
+
 const MinimalTemplate = React.forwardRef(({ profile, experiences, education = [], certifications = [], projects = [] }, ref) => {
   const sortedExperiences = [...experiences].sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
   const allSkills = [...new Set(sortedExperiences.filter(exp => exp.skills?.length).flatMap(exp => exp.skills))];
@@ -13,11 +22,11 @@ const MinimalTemplate = React.forwardRef(({ profile, experiences, education = []
         <h1 className="text-5xl font-light text-gray-900 mb-1 tracking-tight">{profile.fullName || 'Your Name'}</h1>
         {profile.headline && <p className="text-lg text-gray-600 font-light mb-4">{profile.headline}</p>}
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600 font-light border-t border-b border-gray-200 py-3 mt-4">
-          {profile.email && <div className="flex items-center"><Mail className="w-3.5 h-3.5 mr-1.5" />{profile.email}</div>}
-          {profile.phone && <div className="flex items-center"><Phone className="w-3.5 h-3.5 mr-1.5" />{profile.phone}</div>}
-          {profile.location && <div className="flex items-center"><MapPin className="w-3.5 h-3.5 mr-1.5" />{profile.location}</div>}
-          {profile.linkedin && <div className="flex items-center"><Linkedin className="w-3.5 h-3.5 mr-1.5" />LinkedIn</div>}
-          {profile.website && <div className="flex items-center"><Globe className="w-3.5 h-3.5 mr-1.5" />Portfolio</div>}
+          {profile.email && contactItem(Mail, profile.email, 'email')}
+          {profile.phone && contactItem(Phone, profile.phone, 'phone')}
+          {profile.location && contactItem(MapPin, profile.location, 'location')}
+          {profile.linkedin && contactItem(Linkedin, 'LinkedIn', 'linkedin')}
+          {profile.website && contactItem(Globe, 'Portfolio', 'website')}
         </div>
       </div>
 

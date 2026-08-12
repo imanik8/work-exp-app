@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Navigation from './components/layout/Navigation';
 import Dashboard from './pages/Dashboard';
 import Resume from './pages/Resume';
+import JobMatch from './pages/JobMatch';
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/resume" element={<Resume />} />
+          <Route path="/job-match" element={<JobMatch />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
