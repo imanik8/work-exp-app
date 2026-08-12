@@ -61,7 +61,7 @@ async function addAllSections(page) {
   await page.getByLabel('Technologies').fill('React, Node.js, AWS');
   await page.getByLabel('Project URL').fill('https://example.com/project');
   await page.getByLabel('GitHub URL').fill('https://github.com/example/project');
-  await page.getByLabel('Description').fill('Built a developer platform that reduced deployment friction and improved release reliability.');
+  await page.locator('textarea[placeholder="What did you build and what impact did it have?"]').fill('Built a developer platform that reduced deployment friction and improved release reliability.');
 }
 
 function assertNoHorizontalOverflow(page) {
