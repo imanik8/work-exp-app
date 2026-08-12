@@ -12,7 +12,7 @@ const profile = {
 };
 
 async function openResume(page) {
-  await page.goto('/resume');
+  await page.goto('./resume');
   await expect(page.getByRole('heading', { name: 'Resume Builder' })).toBeVisible();
   await page.evaluate(() => localStorage.clear());
   await page.reload();
