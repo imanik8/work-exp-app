@@ -63,12 +63,16 @@ const ClassicTemplate = React.forwardRef(({ profile, experiences, education = []
       {/* Technical Skills */}
       {allSkills.length > 0 && (
         <div className="mb-8">
-          <h3 className="text-xl font-bold text-gray-900 mb-3 uppercase tracking-wide border-b border-gray-300 pb-2">
+          <h3 className="text-xl font-bold text-gray-900 mb-3 uppercase tracking-wide border-b border-gray-300 pb-2 flex items-center">
+            <Code2 className="w-5 h-5 mr-2" />
             Technical Skills
           </h3>
           <div className="flex flex-wrap gap-2">
             {allSkills.map((skill, index) => (
-              <span key={index} className="px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm">
+              <span
+                key={index}
+                className="inline-block px-3 py-1 bg-gray-100 text-gray-800 rounded text-sm font-medium"
+              >
                 {skill}
               </span>
             ))}
@@ -80,38 +84,50 @@ const ClassicTemplate = React.forwardRef(({ profile, experiences, education = []
       {sortedExperiences.length > 0 && (
         <div className="mb-8">
           <h3 className="text-xl font-bold text-gray-900 mb-4 uppercase tracking-wide border-b border-gray-300 pb-2">
-            Professional Experience
+            Work Experience
           </h3>
           <div className="space-y-6">
             {sortedExperiences.map((exp, index) => (
-              <div key={exp.id || index} className="border-l-2 border-gray-300 pl-4">
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-900">{exp.position}</h4>
-                    <p className="text-gray-700 font-semibold">{exp.company}</p>
-                    {exp.location && <p className="text-sm text-gray-600">{exp.location}</p>}
+              <div key={exp.id || index} className="relative pl-8 border-l-2 border-gray-300">
+                <div className="absolute left-0 top-0 w-3 h-3 bg-gray-800 rounded-full" style={{ marginLeft: '-7px' }}></div>
+                
+                <div className="mb-2">
+                  <h4 className="text-lg font-bold text-gray-900">{exp.position}</h4>
+                  <div className="flex items-center text-gray-700 font-semibold">
+                    <Building2 className="w-4 h-4 mr-1" />
+                    {exp.company}
+                    {exp.location && (
+                      <span className="mx-2 text-gray-400">•</span>
+                    )}
+                    {exp.location && (
+                      <span className="flex items-center">
+                        <MapPin className="w-4 h-4 mr-1" />
+                        {exp.location}
+                      </span>
+                    )}
                   </div>
-                  <div className="text-right text-sm text-gray-600">
-                    <div className="flex items-center justify-end">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)}
-                    </div>
-                    <div className="mt-1 font-medium">
-                      {calculateDuration(exp.startDate, exp.endDate, exp.current)}
-                    </div>
+                  <div className="flex items-center text-sm text-gray-600 mt-1">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)}
+                    <span className="mx-2">•</span>
+                    {calculateDuration(exp.startDate, exp.endDate, exp.current)}
                   </div>
                 </div>
 
                 {exp.description && (
-                  <p className="text-gray-700 mb-2 leading-relaxed">
+                  <p className="text-gray-700 mb-3 leading-relaxed">
                     {exp.description}
                   </p>
                 )}
 
+                {/* Skills for this experience */}
                 {exp.skills && exp.skills.length > 0 && (
-                  <p className="text-sm text-gray-600 mb-2">
-                    <strong>Technologies:</strong> {exp.skills.join(', ')}
-                  </p>
+                  <div className="mb-3">
+                    <p className="text-sm text-gray-600 font-semibold mb-1">Technologies:</p>
+                    <p className="text-sm text-gray-700">
+                      {exp.skills.join(' • ')}
+                    </p>
+                  </div>
                 )}
 
                 {exp.achievements && exp.achievements.length > 0 && exp.achievements[0] !== '' && (
@@ -130,7 +146,8 @@ const ClassicTemplate = React.forwardRef(({ profile, experiences, education = []
       {/* Education */}
       {education.length > 0 && (
         <div className="mb-8">
-          <h3 className="text-xl font-bold text-gray-900 mb-4 uppercase tracking-wide border-b border-gray-300 pb-2">
+          <h3 className="text-xl font-bold text-gray-900 mb-4 uppercase tracking-wide border-b border-gray-300 pb-2 flex items-center">
+            <GraduationCap className="w-5 h-5 mr-2" />
             Education
           </h3>
           <div className="space-y-4">
@@ -139,8 +156,8 @@ const ClassicTemplate = React.forwardRef(({ profile, experiences, education = []
                 <h4 className="text-lg font-bold text-gray-900">{edu.degree}</h4>
                 <p className="text-gray-700 font-semibold">{edu.institution}</p>
                 <p className="text-sm text-gray-600">
-                  {edu.location && `${edu.location} • `}{edu.graduationYear || `${edu.startYear} - ${edu.endYear}`}
-                  {edu.gpa && ` • GPA: ${edu.gpa}`}
+                  {edu.graduationYear || `${edu.startYear} - ${edu.endYear}`}
+                  {edu.gpa && <span> • GPA: {edu.gpa}</span>}
                 </p>
               </div>
             ))}
@@ -151,18 +168,18 @@ const ClassicTemplate = React.forwardRef(({ profile, experiences, education = []
       {/* Certifications */}
       {certifications.length > 0 && (
         <div className="mb-8">
-          <h3 className="text-xl font-bold text-gray-900 mb-4 uppercase tracking-wide border-b border-gray-300 pb-2">
+          <h3 className="text-xl font-bold text-gray-900 mb-4 uppercase tracking-wide border-b border-gray-300 pb-2 flex items-center">
+            <Award className="w-5 h-5 mr-2" />
             Certifications
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-2">
             {certifications.map((cert, index) => (
               <div key={index}>
                 <h4 className="font-bold text-gray-900">{cert.name}</h4>
                 <p className="text-sm text-gray-700">
                   {cert.issuer}
-                  {cert.issueDate && ` • ${formatDate(cert.issueDate)}`}
-                  {cert.expiryDate && ` • Expires: ${formatDate(cert.expiryDate)}`}
-                  {cert.credentialId && ` • ID: ${cert.credentialId}`}
+                  {cert.issueDate && <span> • {formatDate(cert.issueDate)}</span>}
+                  {cert.expiryDate && <span> • Expires: {formatDate(cert.expiryDate)}</span>}
                 </p>
               </div>
             ))}
@@ -170,7 +187,7 @@ const ClassicTemplate = React.forwardRef(({ profile, experiences, education = []
         </div>
       )}
 
-      {/* Footer */}
+      {/* Footer Note */}
       {sortedExperiences.length === 0 && !profile.summary && (
         <div className="text-center text-gray-400 py-12">
           <p>Add your profile information and work experiences to generate your resume.</p>
