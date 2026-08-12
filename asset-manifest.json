@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/work-exp-app/static/css/main.d7d538ff.css",
+    "main.js": "/work-exp-app/static/js/main.53938c2d.js",
+    "static/js/213.db451ab2.chunk.js": "/work-exp-app/static/js/213.db451ab2.chunk.js",
+    "static/js/455.f07a62a6.chunk.js": "/work-exp-app/static/js/455.f07a62a6.chunk.js",
+    "index.html": "/work-exp-app/index.html",
+    "main.d7d538ff.css.map": "/work-exp-app/static/css/main.d7d538ff.css.map",
+    "main.53938c2d.js.map": "/work-exp-app/static/js/main.53938c2d.js.map",
+    "213.db451ab2.chunk.js.map": "/work-exp-app/static/js/213.db451ab2.chunk.js.map",
+    "455.f07a62a6.chunk.js.map": "/work-exp-app/static/js/455.f07a62a6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d7d538ff.css",
+    "static/js/main.53938c2d.js"
+  ]
+}
