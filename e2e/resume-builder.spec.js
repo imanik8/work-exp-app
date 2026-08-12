@@ -68,6 +68,8 @@ function assertNoHorizontalOverflow(page) {
   return page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1);
 }
 
+const preview = (page) => page.getByTestId('resume-preview');
+
 test.describe('Resume Builder browser regression', () => {
   test.beforeEach(async ({ page }) => {
     await openResume(page);
@@ -80,13 +82,13 @@ test.describe('Resume Builder browser regression', () => {
 
     await expect(page.getByText('B.Tech in Computer Science')).toBeVisible();
     await expect(page.getByText('AWS Certified Developer')).toBeVisible();
-    await expect(page.getByText('Developer Platform')).toBeVisible();
+    await expect(preview(page).getByRole('heading', { name: 'Developer Platform' })).toBeVisible();
 
     for (const template of ['Classic', 'Modern', 'Minimal']) {
       await page.getByRole('button', { name: new RegExp(`^${template}`) }).click();
-      await expect(page.getByText('Alex Engineer')).toBeVisible();
-      await expect(page.getByText('Developer Platform')).toBeVisible();
-      await expect(page.locator('[data-testid="resume-preview"]')).toBeVisible();
+      await expect(preview(page).getByText('Alex Engineer')).toBeVisible();
+      await expect(preview(page).getByText('Developer Platform')).toBeVisible();
+      await expect(preview(page)).toBeVisible();
     }
 
     expect(await assertNoHorizontalOverflow(page)).toBeTruthy();
@@ -94,7 +96,7 @@ test.describe('Resume Builder browser regression', () => {
     await page.reload({ waitUntil: 'domcontentloaded' });
     await expect(page.getByText('B.Tech in Computer Science')).toBeVisible();
     await expect(page.getByText('AWS Certified Developer')).toBeVisible();
-    await expect(page.getByText('Developer Platform')).toBeVisible();
+    await expect(preview(page).getByText('Developer Platform')).toBeVisible();
 
     const downloadPromise = page.waitForEvent('download');
     await page.getByRole('button', { name: /download pdf/i }).click();
