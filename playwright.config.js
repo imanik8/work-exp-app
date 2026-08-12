@@ -16,7 +16,7 @@ module.exports = defineConfig({
     video: 'retain-on-failure',
   },
   webServer: {
-    command: 'npx serve -s build -l 4173',
+    command: 'node e2e/server.js',
     url: 'http://127.0.0.1:4173/work-exp-app/',
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,

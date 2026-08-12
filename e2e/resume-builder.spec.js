@@ -12,17 +12,23 @@ const profile = {
 };
 
 async function openResume(page) {
-  const response = await page.goto('/work-exp-app/resume', { waitUntil: 'domcontentloaded' });
+  const pageErrors = [];
+  page.on('pageerror', (error) => pageErrors.push(error));
+
+  const response = await page.goto('./resume', { waitUntil: 'domcontentloaded' });
   expect(response).not.toBeNull();
   expect(response.status()).toBeLessThan(400);
+
   await expect(page.getByRole('heading', { name: 'Resume Builder' })).toBeVisible();
+  expect(pageErrors, pageErrors.map((error) => error.stack || error.message).join('\n')).toHaveLength(0);
+
   await page.evaluate(() => localStorage.clear());
   await page.reload({ waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('heading', { name: 'Resume Builder' })).toBeVisible();
 }
 
 async function addProfile(page) {
-  await page.getByRole('button', { name: /add profile info/i }).click();
+  await page.getByRole('button', { name: 'Add Profile Info', exact: true }).first().click();
   await page.getByLabel('Full Name').fill(profile.fullName);
   await page.getByLabel('Professional Headline').fill(profile.headline);
   await page.getByLabel('Email').fill(profile.email);
@@ -30,7 +36,7 @@ async function addProfile(page) {
   await page.getByLabel('Location').fill(profile.location);
   await page.getByLabel('LinkedIn URL').fill(profile.linkedin);
   await page.getByLabel('Website / Portfolio').fill(profile.website);
-  await page.getByLabel('Professional Summary').fill(profile.summary);
+  await page.locator('textarea[name="summary"]').fill(profile.summary);
   await page.getByRole('button', { name: 'Save Profile' }).click();
   await expect(page.getByRole('button', { name: /edit profile/i })).toBeVisible();
 }
@@ -55,11 +61,17 @@ async function addAllSections(page) {
   await page.getByLabel('Technologies').fill('React, Node.js, AWS');
   await page.getByLabel('Project URL').fill('https://example.com/project');
   await page.getByLabel('GitHub URL').fill('https://github.com/example/project');
-  await page.getByLabel('Description').fill('Built a developer platform that reduced deployment friction and improved release reliability.');
+  await page.locator('textarea[placeholder="What did you build and what impact did it have?"]').fill('Built a developer platform that reduced deployment friction and improved release reliability.');
 }
 
 function assertNoHorizontalOverflow(page) {
   return page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1);
+}
+
+const preview = (page) => page.getByTestId('resume-preview');
+
+async function expectPreviewProject(page) {
+  await expect(preview(page).getByRole('heading', { name: 'Developer Platform' })).toBeVisible();
 }
 
 test.describe('Resume Builder browser regression', () => {
@@ -74,13 +86,13 @@ test.describe('Resume Builder browser regression', () => {
 
     await expect(page.getByText('B.Tech in Computer Science')).toBeVisible();
     await expect(page.getByText('AWS Certified Developer')).toBeVisible();
-    await expect(page.getByText('Developer Platform')).toBeVisible();
+    await expectPreviewProject(page);
 
     for (const template of ['Classic', 'Modern', 'Minimal']) {
       await page.getByRole('button', { name: new RegExp(`^${template}`) }).click();
-      await expect(page.getByText('Alex Engineer')).toBeVisible();
-      await expect(page.getByText('Developer Platform')).toBeVisible();
-      await expect(page.locator('[data-testid="resume-preview"]')).toBeVisible();
+      await expect(preview(page).getByText('Alex Engineer')).toBeVisible();
+      await expectPreviewProject(page);
+      await expect(preview(page)).toBeVisible();
     }
 
     expect(await assertNoHorizontalOverflow(page)).toBeTruthy();
@@ -88,7 +100,7 @@ test.describe('Resume Builder browser regression', () => {
     await page.reload({ waitUntil: 'domcontentloaded' });
     await expect(page.getByText('B.Tech in Computer Science')).toBeVisible();
     await expect(page.getByText('AWS Certified Developer')).toBeVisible();
-    await expect(page.getByText('Developer Platform')).toBeVisible();
+    await expectPreviewProject(page);
 
     const downloadPromise = page.waitForEvent('download');
     await page.getByRole('button', { name: /download pdf/i }).click();
@@ -109,7 +121,7 @@ test.describe('Resume Builder browser regression', () => {
   test('mobile layout has no horizontal overflow and exposes all key controls', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'chromium-mobile', 'Mobile-only workflow');
     await expect(page.getByRole('heading', { name: 'Resume Builder' })).toBeVisible();
-    await expect(page.getByRole('button', { name: /add profile info/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Add Profile Info', exact: true }).first()).toBeVisible();
     await expect(page.getByRole('button', { name: /^Classic/ })).toBeVisible();
     await expect(page.getByRole('button', { name: /^Modern/ })).toBeVisible();
     await expect(page.getByRole('button', { name: /^Minimal/ })).toBeVisible();

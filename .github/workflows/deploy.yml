@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build-test-deploy:
@@ -16,17 +19,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
       - name: Install dependencies
-        run: npm install
-
-      - name: Commit updated package-lock.json
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add package-lock.json
-          git diff --staged --quiet || git commit -m "chore: Update package-lock.json"
-          git push
+        run: npm ci
 
       - name: Run unit tests
         run: npm test -- --coverage --watchAll=false
@@ -52,6 +48,7 @@ jobs:
           retention-days: 14
 
       - name: Deploy to GitHub Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
