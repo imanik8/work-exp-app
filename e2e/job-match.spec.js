@@ -23,9 +23,9 @@ test.describe('Job Match browser regression', () => {
     await page.getByLabel('Job description').fill(jobDescription);
     await page.getByRole('button', { name: 'Analyze Match' }).click();
     await expect(page.getByText(/Strong match|Good match|Partial match|Low match/)).toBeVisible();
-    await expect(page.getByText('java', { exact: true })).toBeVisible();
-    await expect(page.getByText('kubernetes', { exact: true })).toBeVisible();
-    await expect(page.getByText('terraform', { exact: true })).toBeVisible();
+    await expect(page.getByText('java', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText('kubernetes', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText('terraform', { exact: true }).first()).toBeVisible();
     await expect(page.getByText('Skill coverage')).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1)).toBeTruthy();
     await page.screenshot({ path: testInfo.outputPath('job-match-desktop.png'), fullPage: true });
