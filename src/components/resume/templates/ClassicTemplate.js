@@ -2,6 +2,15 @@ import React from 'react';
 import { Mail, Phone, MapPin, Linkedin, Globe, Calendar, Building2, Code2, Award, GraduationCap } from 'lucide-react';
 import { formatDate, calculateDuration } from '../../../utils/dateUtils';
 
+const contactItem = (Icon, content, key) => (
+  <div key={key} data-testid="resume-contact-item" className="inline-flex items-center text-sm text-gray-600 leading-5">
+    <span className="inline-flex items-center justify-center w-4 h-5 shrink-0 mr-1">
+      <Icon className="w-4 h-4 block" />
+    </span>
+    <span className="leading-5">{content}</span>
+  </div>
+);
+
 const ClassicTemplate = React.forwardRef(({ profile, experiences, education = [], certifications = [] }, ref) => {
   // Sort experiences by start date (most recent first)
   const sortedExperiences = [...experiences].sort((a, b) => {
@@ -31,36 +40,11 @@ const ClassicTemplate = React.forwardRef(({ profile, experiences, education = []
         )}
         
         <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-          {profile.email && (
-            <div className="flex items-center">
-              <Mail className="w-4 h-4 mr-1" />
-              {profile.email}
-            </div>
-          )}
-          {profile.phone && (
-            <div className="flex items-center">
-              <Phone className="w-4 h-4 mr-1" />
-              {profile.phone}
-            </div>
-          )}
-          {profile.location && (
-            <div className="flex items-center">
-              <MapPin className="w-4 h-4 mr-1" />
-              {profile.location}
-            </div>
-          )}
-          {profile.linkedin && (
-            <div className="flex items-center">
-              <Linkedin className="w-4 h-4 mr-1" />
-              <span>LinkedIn</span>
-            </div>
-          )}
-          {profile.website && (
-            <div className="flex items-center">
-              <Globe className="w-4 h-4 mr-1" />
-              <span>Portfolio</span>
-            </div>
-          )}
+          {profile.email && contactItem(Mail, profile.email, 'email')}
+          {profile.phone && contactItem(Phone, profile.phone, 'phone')}
+          {profile.location && contactItem(MapPin, profile.location, 'location')}
+          {profile.linkedin && contactItem(Linkedin, 'LinkedIn', 'linkedin')}
+          {profile.website && contactItem(Globe, 'Portfolio', 'website')}
         </div>
       </div>
 

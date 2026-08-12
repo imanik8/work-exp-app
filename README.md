@@ -1,386 +1,287 @@
 # 🧰 Work Experience Tracker & Resume Builder
 
-A beautiful and intuitive React application for tracking your professional work experience and generating professional resumes. Built with modern design principles, smooth animations, and a focus on user experience.
+A privacy-first React application for tracking professional experience, building resumes, and comparing resumes against job descriptions.
+
+The project is intentionally **free and local-first**. The new Job Match feature uses a transparent rule-based engine that runs entirely in the browser — no OpenAI API, paid AI provider, backend, account, API key, or usage quota is required.
 
 ## ✨ Features
 
-### 📊 **Experience Management**
-- **Smart Experience Tracking**
-  - Real-time duration calculations (years, months, days)
-  - Company autocomplete with Clearbit API integration
-  - Job title autocomplete (300+ local titles + API suggestions)
-  - Location autocomplete (300+ major cities worldwide)
-  - Skills & technologies tracking per role
-  - Achievement management with bullet points
-  - Support for current positions
-
-### 📄 **Professional Resume Builder** ⭐ NEW
-- **Multiple Templates**
-  - **Classic** - Traditional serif design with timeline
-  - **Modern** - Contemporary with color accents and gradients
-  - **Minimal** - Clean, simple, and ATS-friendly
-- **PDF Export** - High-quality PDF generation with custom filename
-- **Print Support** - Optimized print layouts
-- **Template Switching** - Live preview with instant template changes
-- **Auto Sections** - Skills, Experience, Education, Certifications
-
-### 🎨 **Modern & Beautiful UI**
-- Clean, minimal design with gradient backgrounds
-- Smooth animations and transitions
-- Responsive layout that works on all devices
-- Dark mode support
-- Eye-friendly color scheme with professional aesthetics
-
-### 🔧 **Data Management**
-- Export/Import data as JSON
+### 📊 Experience Management
+- Real-time experience duration calculations
+- Company, role, location and employment details
+- Skills and technologies per role
+- Achievement bullets
+- Current-position support
 - LocalStorage persistence
-- Clear all data option
-- Merge or replace on import
+- JSON import/export
 
-## 📸 Screenshots
+### 📄 Resume Builder
+- Classic, Modern and Minimal templates
+- Profile and professional summary
+- Work experience
+- Technical skills aggregation
+- Education
+- Certifications
+- Projects
+- PDF export
+- Print support
+- Template switching
+- Dark mode and responsive layouts
 
-### Resume Templates
+### 🎯 Job Match — NEW
+Paste a complete job description and compare it with the career information stored in the app.
 
-**Classic Template**
-- Traditional professional design
-- Serif typography (Georgia)
-- Timeline-based experience layout
-- Black and white for maximum compatibility
+The matcher reports:
+- Overall match score
+- Required-skill coverage
+- Preferred-skill coverage
+- Keyword coverage
+- Matched keywords
+- Missing keywords
+- Skill-category coverage
+- Detected seniority
+- Education requirement coverage
 
-**Modern Template**
-- Contemporary blue gradient header
-- Color-coded sections
-- Card-style education blocks
-- Eye-catching skill pills
+**Privacy/free guarantee:** Job Match runs locally in the browser using deterministic JavaScript. The job description and analysis are stored only in browser LocalStorage. Nothing is sent to an AI provider or paid service.
 
-**Minimal Template**
-- Ultra-clean design
-- Maximum whitespace
-- Light typography
-- Simple borders and lines
-- Perfect for ATS systems
+### 🧪 Automated Quality Checks
+Every pull request and push runs:
+- React unit tests
+- Production build
+- Playwright desktop browser tests
+- Playwright mobile browser tests
+- Dark-mode/responsive regression checks
+- Resume template switching checks
+- LocalStorage persistence checks
+- PDF download checks
+- Job Match analysis and persistence checks
+- GitHub Pages deployment only after all checks pass
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- npm or yarn package manager
+- Node.js 18+ recommended
+- npm
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/aniket-r2Dev2/work-exp-app.git
-   cd work-exp-app
-   ```
+```bash
+git clone https://github.com/aniket-r2Dev2/work-exp-app.git
+cd work-exp-app
+npm install
+npm start
+```
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+Open `http://localhost:3000`.
 
-3. **Set up API keys (Optional but recommended)**
-   ```bash
-   # Create environment file
-   echo "REACT_APP_JSEARCH_API_KEY=your_api_key_here" > .env.local
-   ```
-   - Get your JSearch API key from [RapidAPI JSearch](https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch)
-   - Replace `your_api_key_here` with your actual API key
-   - **Note:** The app works without the API key using local job titles only
-
-4. **Start the development server**
-   ```bash
-   npm start
-   ```
-
-5. **Open your browser**
-   - Navigate to [http://localhost:3000](http://localhost:3000) to view the application
-
-### Build for Production
+### Production build
 
 ```bash
 npm run build
 ```
-This creates an optimized production build in the `build` folder.
 
-## 🎯 How to Use
-
-### **Track Your Experience**
-
-1. **Add Your First Experience**
-   - Click "Add New Experience" button
-   - Fill in company details (autocomplete will suggest logos)
-   - Add position with smart autocomplete
-   - Add location with city autocomplete
-   - Select employment type (Full-time, Part-time, etc.)
-   - Add skills/technologies used
-   - Include job description and key achievements
-
-2. **Manage Your Timeline**
-   - View your total experience (years, months, days)
-   - Edit or remove existing experiences
-   - Mark current positions
-   - Track companies worked at
-
-### **Build Your Resume** ⭐
-
-1. **Add Profile Information**
-   - Click "Experiences" in navigation
-   - Navigate to "Resume" tab
-   - Click "Add Profile Info"
-   - Fill in your contact details and professional summary
-
-2. **Choose a Template**
-   - Select from Classic, Modern, or Minimal templates
-   - See live preview of your resume
-   - Switch templates anytime
-
-3. **Export Your Resume**
-   - **Download PDF** - High-quality PDF with custom filename
-   - **Print** - Optimized for professional printing
-   - Files named as: `Resume_YourName_2026-01-20.pdf`
-
-4. **What's Included**
-   - Professional summary
-   - Technical skills (aggregated from all roles)
-   - Work experience with achievements
-   - Skills used in each role
-   - Education (coming soon)
-   - Certifications (coming soon)
-
-## 📁 Project Structure
-
-```
-work-exp-app/
-├── public/
-│   ├── index.html
-│   └── favicon.ico
-├── src/
-│   ├── components/
-│   │   ├── cards/
-│   │   │   ├── ExperienceCard.js       # Experience display with skills
-│   │   │   └── SummaryCard.js          # Total experience summary
-│   │   ├── common/
-│   │   │   ├── Button.js               # Reusable button component
-│   │   │   └── Input.js                # Enhanced input with icons
-│   │   ├── forms/
-│   │   │   ├── ExperienceForm.js       # Experience form with skills
-│   │   │   └── ProfileForm.js          # Profile information form
-│   │   ├── layout/
-│   │   │   ├── EmptyState.js
-│   │   │   └── Header.js               # App header with navigation
-│   │   └── resume/
-│   │       ├── ResumePreview.js        # Original resume component
-│   │       └── templates/              # ⭐ NEW Resume templates
-│   │           ├── ClassicTemplate.js  # Traditional design
-│   │           ├── ModernTemplate.js   # Contemporary design
-│   │           └── MinimalTemplate.js  # Clean & simple design
-│   ├── config/
-│   │   ├── jobTitles.json              # 300+ job positions
-│   │   └── cities.json                 # 300+ major cities
-│   ├── hooks/
-│   │   ├── useExperience.js            # Experience state management
-│   │   ├── useProfile.js               # Profile state management
-│   │   └── useTheme.js                 # Dark mode management
-│   ├── pages/
-│   │   ├── Dashboard.js                # Main experiences page
-│   │   └── Resume.js                   # ⭐ Resume builder page
-│   ├── utils/
-│   │   └── dateUtils.js                # Date calculations
-│   ├── App.js                          # Main app with routing
-│   ├── index.css                       # ⭐ Global styles + print styles
-│   └── index.js                        # Entry point
-├── package.json                        # ⭐ Updated with PDF dependencies
-└── README.md
-```
-
-## 🔧 Technology Stack
-
-### Core
-- **React 19.1.0** - Latest React with modern hooks
-- **React Router** - Client-side routing
-- **Tailwind CSS** - Utility-first CSS framework
-- **Lucide React** - Beautiful icon library
-
-### Resume Builder ⭐
-- **react-to-print** - Print functionality
-- **html2canvas** - HTML to canvas conversion
-- **jsPDF** - PDF generation
-
-### APIs & Data
-- **Clearbit API** - Company logos and data
-- **JSearch API** - Job title autocomplete (optional)
-- **GeoDB Cities API** - Location autocomplete (optional)
-
-### Storage
-- **LocalStorage** - Client-side data persistence
-
-## 🎨 Resume Template Details
-
-### Classic Template
-- **Style:** Traditional, professional
-- **Font:** Georgia (serif)
-- **Colors:** Black, white, gray
-- **Best for:** Corporate, finance, legal, traditional industries
-- **Features:** Timeline, clear sections, conservative design
-
-### Modern Template  
-- **Style:** Contemporary, eye-catching
-- **Font:** System UI (sans-serif)
-- **Colors:** Blue gradients, color accents
-- **Best for:** Tech, startups, creative roles
-- **Features:** Colored header, skill badges, modern spacing
-
-### Minimal Template
-- **Style:** Clean, simple, scannable
-- **Font:** Helvetica Neue (sans-serif)
-- **Colors:** Grayscale only
-- **Best for:** ATS systems, tech roles, minimalists
-- **Features:** Maximum whitespace, light typography, text-based
-
-## 📊 Data Flow
-
-### Experience Data
-```javascript
-{
-  id: "timestamp",
-  company: "Company Name",
-  companyDomain: "company.com",
-  companyLogo: "https://logo.clearbit.com/company.com",
-  position: "Software Engineer",
-  location: "San Francisco, CA",
-  category: "Full-time",
-  startDate: "2021-06-01",
-  endDate: "2024-01-15",
-  current: false,
-  description: "Job description...",
-  skills: ["React", "Node.js", "AWS"],
-  achievements: [
-    "Led team of 5 developers",
-    "Increased performance by 40%"
-  ]
-}
-```
-
-### Profile Data
-```javascript
-{
-  fullName: "John Doe",
-  headline: "Senior Software Engineer",
-  email: "john@example.com",
-  phone: "+1 234 567 8900",
-  location: "San Francisco, CA",
-  linkedin: "linkedin.com/in/johndoe",
-  website: "johndoe.com",
-  summary: "Experienced software engineer..."
-}
-```
-
-## 🎯 Roadmap
-
-### Phase 1: Foundation ✅ (Complete)
-- [x] Experience tracking
-- [x] Skills management
-- [x] Data persistence
-- [x] Import/Export
-
-### Phase 2: Resume Builder ✅ (Complete)
-- [x] Multiple templates (3)
-- [x] PDF export
-- [x] Print support
-- [x] Template selector
-
-### Phase 3: Coming Soon 🚧
-- [ ] Education section
-- [ ] Certifications section
-- [ ] Custom template colors
-- [ ] More template options (Technical, Executive)
-- [ ] Resume scoring
-
-### Phase 4: AI Features 🎯
-- [ ] Job description analyzer
-- [ ] Resume vs JD matching
-- [ ] AI resume suggestions
-- [ ] Keyword optimization
-- [ ] ATS compatibility checker
-
-## 🔒 Privacy & Data
-
-- **Local Storage:** All data stored in browser localStorage
-- **No Server:** No data sent to external servers (except API calls)
-- **API Usage:**
-  - Clearbit: Company logos (no personal data)
-  - JSearch: Job titles (query only, optional)
-  - GeoDB: Cities (query only, optional)
-- **Export/Import:** Full control over your data
-
-## 🧪 Testing
-
-### Running Tests
+### Unit tests
 
 ```bash
 npm test
 ```
 
-### Test Coverage
+### Browser tests
 
 ```bash
-npm test -- --coverage
+npx playwright install chromium
+npm run build
+npm run test:e2e
 ```
 
-Tests are located in `src/__tests__/` directory.
+The browser suite starts the built application with the repository's GitHub Pages basename so routing is tested in the same shape as production.
+
+## 🎯 How to Use
+
+### Track your experience
+
+1. Open **Experiences**.
+2. Add your companies, roles, dates, skills and achievements.
+3. Your data is automatically persisted locally.
+4. Use JSON export for backups.
+
+### Build a resume
+
+1. Open **Resume**.
+2. Add your profile information.
+3. Add education, certifications and projects under **Resume Sections**.
+4. Choose Classic, Modern or Minimal.
+5. Download PDF or print.
+
+### Match a job description
+
+1. Open **Job Match**.
+2. Paste the complete job description.
+3. Select **Analyze Match**.
+4. Review the overall score, matched skills and gaps.
+5. Use the gaps as a checklist for improving your resume **only where they reflect real experience**.
+
+The current matcher is intentionally deterministic. It does not invent skills, achievements, metrics or experience.
+
+## 🧠 How Job Match Works
+
+The first version does not depend on a server or AI API.
+
+1. The JD is normalized locally.
+2. Known skills, seniority terms and education terms are detected.
+3. The engine searches the saved profile, experiences, education, certifications and projects.
+4. Required, preferred and overall keyword coverage are calculated.
+5. Results are grouped by skill category.
+
+The score is designed to be transparent rather than pretending to be an authoritative ATS score. It is a useful comparison signal, not a hiring prediction.
+
+### Scoring
+
+- Required skills: 60%
+- Overall detected keyword coverage: 25%
+- Preferred skills: 10%
+- Education requirement: 5%
+
+When a JD contains no recognized keywords, the analyzer does not penalize the user for something it cannot understand.
+
+## 🔒 Privacy & Free-Use Principles
+
+- Career data is stored in browser LocalStorage.
+- Job descriptions and Job Match results are stored locally.
+- Job Match has no backend and no external AI calls.
+- No paid package is required for Job Match.
+- No API key is required for Job Match.
+- Export/import lets users keep control of their data.
+
+Some older autocomplete functionality in the application may use optional external data integrations. The Job Match feature intentionally does **not** add any paid dependency or external service.
+
+## 🧱 Technology Stack
+
+### Core
+- React 19
+- React Router
+- Tailwind CSS
+- Lucide React
+
+### Resume
+- react-to-print
+- html2canvas
+- jsPDF
+
+### Testing
+- React Testing Library
+- Jest via Create React App
+- Playwright
+
+### Storage
+- Browser LocalStorage
+
+### Deployment
+- GitHub Actions
+- GitHub Pages
+
+No new paid service, hosted database, AI API, or proprietary SDK is required by the Job Match feature.
+
+## 📁 Project Structure
+
+```text
+work-exp-app/
+├── e2e/
+│   ├── server.js
+│   ├── resume-builder.spec.js
+│   └── job-match.spec.js
+├── src/
+│   ├── components/
+│   │   ├── common/
+│   │   ├── forms/
+│   │   ├── layout/
+│   │   └── resume/
+│   ├── config/
+│   ├── hooks/
+│   │   ├── useExperience.js
+│   │   ├── useProfile.js
+│   │   ├── useResumeSections.js
+│   │   └── useJobMatch.js
+│   ├── pages/
+│   │   ├── Dashboard.js
+│   │   ├── Resume.js
+│   │   └── JobMatch.js
+│   ├── utils/
+│   │   ├── dateUtils.js
+│   │   └── jobMatchUtils.js
+│   └── __tests__/
+├── playwright.config.js
+└── .github/workflows/deploy.yml
+```
+
+## 🗺️ Roadmap
+
+### Phase 1 — Foundation ✅
+- [x] Experience tracking
+- [x] Skills management
+- [x] Local persistence
+- [x] Import/export
+- [x] Responsive UI
+- [x] Dark mode
+
+### Phase 2 — Resume Builder ✅
+- [x] Profile
+- [x] Work experience
+- [x] Education
+- [x] Certifications
+- [x] Projects
+- [x] Three templates
+- [x] PDF export
+- [x] Print support
+
+### Phase 3 — Job Intelligence 🚧
+- [x] Local JD analyzer
+- [x] Resume/profile vs JD matching
+- [x] Required/preferred skill detection
+- [x] Match score
+- [x] Keyword gap analysis
+- [x] Skill-category coverage
+- [ ] Canonical profile skill library
+- [ ] Resume versions per target job
+- [ ] Job application tracker
+
+### Phase 4 — Optional AI, still privacy-conscious 🎯
+- [ ] AI-assisted rewriting with an explicitly optional provider
+- [ ] Tailored resume suggestions
+- [ ] Before/after comparison
+- [ ] User approval for every generated change
+- [ ] Never invent experience, metrics or skills
+
+Any future AI integration should remain optional. The core product must continue to work fully without a paid AI service.
 
 ## 🚀 Deployment
 
-### GitHub Pages
+The production site is deployed through GitHub Pages after the CI pipeline passes.
 
-```bash
-npm run deploy
-```
+Live app:
 
-Your app will be live at: `https://aniket-r2dev2.github.io/work-exp-app/`
+https://aniket-r2dev2.github.io/work-exp-app/
 
-### CI/CD
+GitHub Actions workflow:
 
-GitHub Actions automatically:
-1. Runs tests on every push
-2. Builds the project
-3. Deploys to GitHub Pages
+`.github/workflows/deploy.yml`
 
-Workflow: `.github/workflows/deploy.yml`
+The deployment job is deliberately last in the pipeline, so a failing unit test, build, or browser regression blocks deployment.
 
-## 📝 Contributing
+## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Create a feature branch.
+2. Implement the feature with unit tests.
+3. Add Playwright coverage for user-visible workflows where appropriate.
+4. Run the production build.
+5. Open a pull request.
+6. Merge only after CI is green.
 
 ## 📄 License
 
-MIT License - see LICENSE file for details
-
-## 🤝 Acknowledgments
-
-- Clearbit for company data and logos
-- JSearch API for job titles
-- GeoDB Cities for location data
-- Lucide for beautiful icons
-- Tailwind CSS for styling framework
-- React team for the amazing framework
-- Open source community
-
-## 📧 Contact
-
-- **Developer:** Aniket Anil Kumar
-- **GitHub:** [@aniket-r2Dev2](https://github.com/aniket-r2Dev2)
-- **Project:** [work-exp-app](https://github.com/aniket-r2Dev2/work-exp-app)
-- **Live Demo:** [https://aniket-r2dev2.github.io/work-exp-app/](https://aniket-r2dev2.github.io/work-exp-app/)
+MIT License — see `LICENSE`.
 
 ---
 
-**Built with ❤️ using React and modern web technologies**
-
-⭐ Star this repo if you find it helpful!
+Built with React and open-source tooling. ❤️
