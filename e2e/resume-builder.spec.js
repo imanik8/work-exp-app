@@ -12,10 +12,16 @@ const profile = {
 };
 
 async function openResume(page) {
-  const response = await page.goto('/work-exp-app/resume', { waitUntil: 'domcontentloaded' });
+  const pageErrors = [];
+  page.on('pageerror', (error) => pageErrors.push(error));
+
+  const response = await page.goto('./resume', { waitUntil: 'domcontentloaded' });
   expect(response).not.toBeNull();
   expect(response.status()).toBeLessThan(400);
+
   await expect(page.getByRole('heading', { name: 'Resume Builder' })).toBeVisible();
+  expect(pageErrors, pageErrors.map((error) => error.stack || error.message).join('\n')).toHaveLength(0);
+
   await page.evaluate(() => localStorage.clear());
   await page.reload({ waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('heading', { name: 'Resume Builder' })).toBeVisible();
