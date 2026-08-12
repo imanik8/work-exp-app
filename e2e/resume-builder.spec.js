@@ -68,6 +68,24 @@ function assertNoHorizontalOverflow(page) {
   return page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1);
 }
 
+async function assertContactAlignment(page) {
+  const items = preview(page).getByTestId('resume-contact-item');
+  const count = await items.count();
+  expect(count).toBeGreaterThan(0);
+
+  for (let i = 0; i < count; i += 1) {
+    const item = items.nth(i);
+    const icon = item.locator('svg');
+    const text = item.locator('span').last();
+    const [iconBox, textBox] = await Promise.all([icon.boundingBox(), text.boundingBox()]);
+    expect(iconBox).not.toBeNull();
+    expect(textBox).not.toBeNull();
+    const iconCenter = iconBox.y + (iconBox.height / 2);
+    const textCenter = textBox.y + (textBox.height / 2);
+    expect(Math.abs(iconCenter - textCenter)).toBeLessThanOrEqual(2);
+  }
+}
+
 const preview = (page) => page.getByTestId('resume-preview');
 
 async function expectPreviewProject(page) {
@@ -92,6 +110,7 @@ test.describe('Resume Builder browser regression', () => {
       await page.getByRole('button', { name: new RegExp(`^${template}`) }).click();
       await expect(preview(page).getByText('Alex Engineer')).toBeVisible();
       await expectPreviewProject(page);
+      await assertContactAlignment(page);
       await expect(preview(page)).toBeVisible();
     }
 
@@ -101,6 +120,7 @@ test.describe('Resume Builder browser regression', () => {
     await expect(page.getByText('B.Tech in Computer Science')).toBeVisible();
     await expect(page.getByText('AWS Certified Developer')).toBeVisible();
     await expectPreviewProject(page);
+    await assertContactAlignment(page);
 
     const downloadPromise = page.waitForEvent('download');
     await page.getByRole('button', { name: /download pdf/i }).click();
