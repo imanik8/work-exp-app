@@ -28,7 +28,7 @@ async function openResume(page) {
 }
 
 async function addProfile(page) {
-  await page.getByRole('button', { name: /add profile info/i }).click();
+  await page.getByRole('button', { name: 'Add Profile Info', exact: true }).first().click();
   await page.getByLabel('Full Name').fill(profile.fullName);
   await page.getByLabel('Professional Headline').fill(profile.headline);
   await page.getByLabel('Email').fill(profile.email);
@@ -115,7 +115,7 @@ test.describe('Resume Builder browser regression', () => {
   test('mobile layout has no horizontal overflow and exposes all key controls', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'chromium-mobile', 'Mobile-only workflow');
     await expect(page.getByRole('heading', { name: 'Resume Builder' })).toBeVisible();
-    await expect(page.getByRole('button', { name: /add profile info/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Add Profile Info', exact: true }).first()).toBeVisible();
     await expect(page.getByRole('button', { name: /^Classic/ })).toBeVisible();
     await expect(page.getByRole('button', { name: /^Modern/ })).toBeVisible();
     await expect(page.getByRole('button', { name: /^Minimal/ })).toBeVisible();
