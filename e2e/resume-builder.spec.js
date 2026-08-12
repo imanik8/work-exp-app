@@ -95,7 +95,7 @@ test.describe('Resume Builder browser regression', () => {
     await page.screenshot({ path: testInfo.outputPath('resume-desktop-full.png'), fullPage: true });
   });
 
-  test('desktop dark mode keeps the builder readable and within viewport', async ({ page, testInfo }) => {
+  test('desktop dark mode keeps the builder readable and within viewport', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'chromium-desktop', 'Desktop-only workflow');
     await page.evaluate(() => document.documentElement.classList.add('dark'));
     await expect(page.getByRole('heading', { name: 'Resume Builder' })).toBeVisible();
@@ -103,7 +103,7 @@ test.describe('Resume Builder browser regression', () => {
     await page.screenshot({ path: testInfo.outputPath('resume-desktop-dark.png'), fullPage: true });
   });
 
-  test('mobile layout has no horizontal overflow and exposes all key controls', async ({ page, testInfo }) => {
+  test('mobile layout has no horizontal overflow and exposes all key controls', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'chromium-mobile', 'Mobile-only workflow');
     await expect(page.getByRole('heading', { name: 'Resume Builder' })).toBeVisible();
     await expect(page.getByRole('button', { name: /add profile info/i })).toBeVisible();
